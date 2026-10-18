@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Switchboard — prompts and settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1000px; box-sizing: border-box; display: flex; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <nav aria-label="Switchboard" style="width: 232px; flex: none; box-sizing: border-box; padding: 28px 16px; background: #2A1E12; color: #F6EFE4; display: flex; flex-direction: column; gap: 6px;">
+    <span style="padding: 0 8px 18px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 28px; line-height: 0.95; letter-spacing: 0.03em;">THE<br>SWITCHBOARD</span>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="8">
+      <sc-if value="{{n.active}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" aria-current="page" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; background: #F6EFE4; color: #2A1E12; text-decoration: none; font-size: 15px; font-weight: 600;"><span>{{n.label}}</span><span>{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.idle}}" hint-placeholder-val="{{true}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="color: #E8D9C2;">{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.hot}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="padding: 2px 8px; border-radius: 10px; background: #A3402A; color: #F6EFE4; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 13px; letter-spacing: 0.08em;">{{n.count}}</span></a>
+      </sc-if>
+    </sc-for>
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #5A3814; display: flex; flex-direction: column; gap: 4px;">
+      <span id="line-state" style="padding: 0 8px 6px; font-size: 13px; color: #E8D9C2;">The line is</span>
+      <div role="radiogroup" aria-labelledby="line-state" style="display: flex; flex-direction: column; gap: 4px;">
+        <sc-for list="{{states}}" as="s" hint-placeholder-count="3">
+          <sc-if value="{{s.on}}" hint-placeholder-val="{{false}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-size: 14px; font-weight: 600;"><input type="radio" name="line-state" checked style="width: 16px; height: 16px; margin: 0; accent-color: #2A1E12;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+          <sc-if value="{{s.off}}" hint-placeholder-val="{{true}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; color: #F6EFE4; font-size: 14px;"><input type="radio" name="line-state" style="width: 16px; height: 16px; margin: 0; accent-color: #F6EFE4;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </nav>
+
+  <main style="flex: 1 1 auto; min-width: 0; box-sizing: border-box; padding: 36px 48px; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 40px; align-content: start;">
+    <section aria-labelledby="prompts" style="display: flex; flex-direction: column; gap: 16px;">
+      <h1 id="prompts" style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 56px; line-height: 0.9;">WEEKLY PROMPTS</h1>
+      <p style="margin: 0; font-size: 15px; color: #5A3814;">Each one goes live Monday at 08:00, in every post and in the recorder. It's always optional.</p>
+      <sc-for list="{{prompts}}" as="p" hint-placeholder-count="5">
+        <div style="display: grid; grid-template-columns: 96px minmax(0, 1fr) 88px; gap: 16px; padding: 14px 0; border-top: 1.5px solid #2A1E12; align-items: start;">
+          <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 17px; letter-spacing: 0.04em;">{{p.week}}<br><span style="font-family: 'Source Serif 4', Georgia, serif; font-weight: 400; font-size: 13px; letter-spacing: 0; color: #5A3814;">{{p.state}}</span></span>
+          <span style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Caveat Brush', cursive; font-size: 22px; line-height: 1.1;">{{p.en}}</span>
+            <span style="font-family: 'Caveat Brush', cursive; font-size: 20px; line-height: 1.1; color: #5A3814;">{{p.fr}}</span>
+          </span>
+          <span style="font-size: 14px; text-align: right;">{{p.count}}</span>
+        </div>
+      </sc-for>
+      <button type="button" style="align-self: flex-start; height: 44px; padding: 0 18px; border: 1.5px solid #2A1E12; border-radius: 22px; background: transparent; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">Add a prompt</button>
+    </section>
+
+    <div style="display: flex; flex-direction: column; gap: 22px;">
+      <section aria-labelledby="clf" style="border: 2px solid #A3402A; border-radius: 4px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px;">
+        <h2 id="clf" style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 20px; letter-spacing: 0.06em;">CLASSIFIER</h2>
+        <p style="margin: 0; font-size: 15px; line-height: 1.45;">Mistral · <strong>free Experiment plan</strong> · training opt-out <strong>on</strong> (checked 16 Oct)</p>
+        <p style="margin: 0; font-size: 14px; line-height: 1.45; color: #A3402A; font-weight: 600;">Testing only. Switch to the paid plan, with a signed DPA, before the first real note.</p>
+        <p style="margin: 0; font-size: 14px; color: #5A3814;">Last 7 days: 0 errors · any failure counts as a flag.</p>
+      </section>
+
+      <section aria-labelledby="pause" style="border: 1.5px solid #2A1E12; border-radius: 4px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
+        <h2 id="pause" style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 20px; letter-spacing: 0.06em;">WHEN THE LINE IS PAUSED</h2>
+        <label for="pm-en" style="font-size: 13px; color: #5A3814;">Message (EN)</label>
+        <textarea id="pm-en" rows="2" style="padding: 10px 12px; border: 1.5px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px; resize: vertical;">The line is resting for a few days. Come back soon, or listen to strangers in the meantime.</textarea>
+        <label for="pm-fr" style="font-size: 13px; color: #5A3814;">Message (FR)</label>
+        <textarea id="pm-fr" rows="2" style="padding: 10px 12px; border: 1.5px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px; resize: vertical;">La ligne se repose quelques jours. Reviens bientôt, ou écoute des inconnus en attendant.</textarea>
+      </section>
+
+      <section aria-labelledby="rules" style="display: flex; flex-direction: column; gap: 6px;">
+        <h2 id="rules" style="margin: 0 0 6px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 20px; letter-spacing: 0.06em;">RULES</h2>
+        <sc-for list="{{rules}}" as="r" hint-placeholder-count="6">
+          <div style="display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-top: 1px solid #E8D9C2; font-size: 15px;"><span>{{r.k}}</span><span style="font-weight: 600; text-align: right;">{{r.v}}</span></div>
+        </sc-for>
+      </section>
+
+      <section aria-labelledby="backup" style="border-radius: 4px; padding: 16px 20px; background: #EFE4D3; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+        <span><strong id="backup" style="font-weight: 600;">Backup reviewer:</strong> none yet. The board asked for one.</span>
+        <button type="button" style="height: 40px; padding: 0 16px; border: none; border-radius: 20px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 14px; flex: none;">Invite</button>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var cur = 'Prompts & settings', line = 'open';
+    var items = [['Overview', '', 'AOverview.dc.html'], ['Queue', '23', 'Switchboard.dc.html'], ['Flagged', '2', 'AFlagged.dc.html'], ['Scheduled', '', 'AScheduled.dc.html'], ['Published', '', 'APublished.dc.html'], ['Deletions', '1', 'ADeletions.dc.html'], ['Traffic', '', 'ASurge.dc.html'], ['Prompts & settings', '', 'APrompts.dc.html']];
+    var nav = items.map(function (it) { var hot = it[3] === true; return { label: it[0], count: it[1], href: it[2], active: it[0] === cur, idle: it[0] !== cur && !hot, hot: it[0] !== cur && hot }; });
+    var states = [['open', 'Open', '#9DC08B'], ['busy', 'Open · busy notice', '#E0A458'], ['paused', 'Paused', '#C9B79C']].map(function (s) { return { label: s[1], dot: s[2], on: s[0] === line, off: s[0] !== line }; });
+    var prompts = [
+      { week: '12 OCT', state: 'live now', en: 'what’s the in-between you’re in right now?', fr: 'dans quel entre-deux es-tu en ce moment ?', count: '14 notes' },
+      { week: '19 OCT', state: 'ready', en: 'what did you never get to say goodbye to?', fr: 'à quoi n’as-tu jamais pu dire au revoir ?', count: '—' },
+      { week: '26 OCT', state: 'ready', en: 'what would you tell yourself a year ago?', fr: 'que dirais-tu à toi d’il y a un an ?', count: '—' },
+      { week: '2 NOV', state: 'needs French', en: 'who do you miss without a reason?', fr: '[French version]', count: '—' },
+      { week: '5 OCT', state: 'past', en: 'tell a stranger something you’ve never said out loud', fr: 'dis à un inconnu ce que tu n’as jamais dit à voix haute', count: '31 notes' }
+    ];
+    var rules = [
+      { k: 'Recording length', v: '5 s to 60 s' },
+      { k: 'Notes per device', v: '3 a day' },
+      { k: 'Unreviewed notes expire after', v: '30 days (set by the DPIA)' },
+      { k: 'Raw audio deleted after decision', v: 'within 30 days' },
+      { k: 'Keyword lists', v: 'EN 64 · FR 58 · by the board, 12 Oct' },
+      { k: 'Bot check', v: 'Cloudflare Turnstile' },
+      { k: 'Surge alert when', v: '24h arrivals over 3× usual, and 30+' },
+      { k: 'Suggest busy notice when', v: 'queue passes 30 days of your time' }
+    ];
+    return { nav: nav, states: states, prompts: prompts, rules: rules };
+  }
+}
+</script>
+</body>
+</html>

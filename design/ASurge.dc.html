@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Switchboard — surge scenario</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1000px; box-sizing: border-box; display: flex; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <nav aria-label="Switchboard" style="width: 232px; flex: none; box-sizing: border-box; padding: 28px 16px; background: #2A1E12; color: #F6EFE4; display: flex; flex-direction: column; gap: 6px;">
+    <span style="padding: 0 8px 18px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 28px; line-height: 0.95; letter-spacing: 0.03em;">THE<br>SWITCHBOARD</span>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="8">
+      <sc-if value="{{n.active}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" aria-current="page" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; background: #F6EFE4; color: #2A1E12; text-decoration: none; font-size: 15px; font-weight: 600;"><span>{{n.label}}</span><span>{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.idle}}" hint-placeholder-val="{{true}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="color: #E8D9C2;">{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.hot}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="padding: 2px 8px; border-radius: 10px; background: #A3402A; color: #F6EFE4; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 13px; letter-spacing: 0.08em;">{{n.count}}</span></a>
+      </sc-if>
+    </sc-for>
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #5A3814; display: flex; flex-direction: column; gap: 4px;">
+      <span id="line-state" style="padding: 0 8px 6px; font-size: 13px; color: #E8D9C2;">The line is</span>
+      <div role="radiogroup" aria-labelledby="line-state" style="display: flex; flex-direction: column; gap: 4px;">
+        <sc-for list="{{states}}" as="s" hint-placeholder-count="3">
+          <sc-if value="{{s.on}}" hint-placeholder-val="{{false}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-size: 14px; font-weight: 600;"><input type="radio" name="line-state" checked style="width: 16px; height: 16px; margin: 0; accent-color: #2A1E12;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+          <sc-if value="{{s.off}}" hint-placeholder-val="{{true}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; color: #F6EFE4; font-size: 14px;"><input type="radio" name="line-state" style="width: 16px; height: 16px; margin: 0; accent-color: #F6EFE4;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </nav>
+
+  <main style="flex: 1 1 auto; min-width: 0; box-sizing: border-box; padding: 32px 44px; display: flex; flex-direction: column; gap: 22px;">
+    <div style="display: flex; align-items: flex-end; gap: 24px;">
+      <h1 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 96px; line-height: 0.82; color: #A3402A;">SURGE</h1>
+      <p style="margin: 0 0 6px; font-size: 18px; line-height: 1.4; max-width: 720px;"><strong>1,042 notes in 48 hours.</strong> A normal day is about 12. Surge mode turned on by itself on Wednesday at 22:10, when arrivals passed 3× your usual rate.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 36px;">
+      <section aria-labelledby="spike" style="display: flex; flex-direction: column; gap: 8px;">
+        <h2 id="spike" style="margin: 0; font-size: 16px; font-weight: 600;">Notes per hour, last 3 days</h2>
+        <svg role="img" aria-label="Notes per hour jumped from under 1 to about 95 on Wednesday night, then slowly fell" viewBox="0 0 640 190" style="width: 100%; height: 150px;">
+          <line x1="30" y1="160" x2="636" y2="160" stroke="#2A1E12" stroke-width="1"></line>
+          <line x1="30" y1="60" x2="636" y2="60" stroke="#E8D9C2" stroke-width="1"></line>
+          <text x="24" y="164" text-anchor="end" font-size="11.5" fill="#5A3814">0</text>
+          <text x="24" y="64" text-anchor="end" font-size="11.5" fill="#5A3814">100</text>
+          <path d="{{spikeArea}}" fill="#A3402A" fill-opacity="0.12" stroke="none"></path>
+          <path d="{{spikeLine}}" fill="none" stroke="#A3402A" stroke-width="2" stroke-linejoin="round"></path>
+          <line x1="{{vx}}" y1="40" x2="{{vx}}" y2="160" stroke="#2A1E12" stroke-dasharray="3 4"></line>
+          <text x="{{vxl}}" y="36" font-size="12.5" fill="#2A1E12">you marked: reel posted, Wed 21:00</text>
+          <text x="30" y="180" font-size="11.5" fill="#5A3814">Tue 21:00</text>
+          <text x="232" y="180" text-anchor="middle" font-size="11.5" fill="#5A3814">Wed 21:00</text>
+          <text x="434" y="180" text-anchor="middle" font-size="11.5" fill="#5A3814">Thu 21:00</text>
+          <text x="636" y="180" text-anchor="end" font-size="11.5" fill="#5A3814">Fri 21:00, now</text>
+        </svg>
+        <p style="margin: 0; font-size: 14px; line-height: 1.45;"><strong style="font-weight: 600;">Which link they came through:</strong> reel link <span style="font-family: ui-monospace, Menlo, monospace; font-size: 13px;">/leave?from=reel-1014</span> 81% · bio link 12% · newsletter 2% · no tag 5%</p>
+        <a href="AMarkPost.dc.html" style="align-self: flex-start; height: 36px; padding: 0 14px; display: flex; align-items: center; border: 1.5px solid #2A1E12; border-radius: 18px; color: #2A1E12; text-decoration: none; font-size: 13.5px;">Mark a post you just made</a>
+      </section>
+
+      <section aria-labelledby="funnel" style="display: flex; flex-direction: column; gap: 6px;">
+        <h2 id="funnel" style="margin: 0 0 4px; font-size: 16px; font-weight: 600;">Where they went</h2>
+        <div style="display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-top: 1.5px solid #2A1E12;"><span style="width: 96px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 34px;">1,042</span><span style="font-size: 15px;">received</span></div>
+        <div style="display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-top: 1px solid #E8D9C2;"><span style="width: 96px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 34px; color: #5A3814;">−212</span><span style="font-size: 15px; color: #5A3814;">stopped: bots, duplicates, under 5 seconds</span></div>
+        <div style="display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-top: 1px solid #E8D9C2;"><span style="width: 96px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 34px;">830</span><span style="font-size: 15px;">in your queue</span></div>
+        <div style="display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-top: 1px solid #E8D9C2;"><span style="width: 96px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 34px; color: #A3402A;">37</span><span style="font-size: 15px; color: #A3402A; font-weight: 600;">flagged, at the top</span></div>
+      </section>
+    </div>
+
+    <section aria-labelledby="cap" style="border: 2px solid #2A1E12; border-radius: 4px; padding: 20px 24px; display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+        <h2 id="cap" style="margin: 0; font-size: 19px; font-weight: 600;">At 1 hour a day, how long 830 notes take</h2>
+        <label style="display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600;"><input type="checkbox" checked style="width: 20px; height: 20px; margin: 0; accent-color: #2A1E12;">Read-first triage</label>
+      </div>
+      <div style="position: relative; height: 112px;">
+        <span style="position: absolute; left: 0; top: 4px; font-size: 14px;">Listen to every note (about 3.5 min each)</span>
+        <span style="position: absolute; left: 0; right: 0; top: 30px; height: 3px; background: #E8D9C2;"></span>
+        <span style="position: absolute; left: 0; top: 30px; height: 3px; width: 96.8%; background: #A3402A;"></span>
+        <span style="position: absolute; right: 0; top: 38px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 17px; color: #A3402A;">48 days · about 316 notes expire unheard</span>
+        <span style="position: absolute; left: 0; top: 62px; font-size: 14px;">Read every transcript (about 1 min); listen only to own-voice notes you approve</span>
+        <span style="position: absolute; left: 0; right: 0; top: 88px; height: 3px; background: #E8D9C2;"></span>
+        <span style="position: absolute; left: 0; top: 88px; height: 3px; width: 36%; background: #2A1E12;"></span>
+        <span style="position: absolute; left: 37%; top: 80px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 17px;">about 18 days · none expire</span>
+        <span style="position: absolute; left: 60%; top: 0; bottom: 0; border-left: 2px dashed #5A3814;"></span>
+        <span style="position: absolute; left: 60.5%; top: 48px; font-family: 'Caveat Brush', cursive; font-size: 18px; color: #5A3814;">30-day limit</span>
+      </div>
+      <p style="margin: 0; font-size: 14px; color: #5A3814;">Scale: 50 days. Narrator notes can be approved by reading: their audio is made from the text you read. Playback at 1.5× or 2× cuts listening time further.</p>
+    </section>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;">
+      <section style="border: 1.5px solid #A3402A; border-radius: 4px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
+        <h3 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.06em; color: #A3402A;">FLAGGED FIRST</h3>
+        <p style="margin: 0; font-size: 15px;">12 of 37 done. Aim: all within 24 hours.</p>
+        <span style="height: 3px; background: #E8D9C2; position: relative;"><span style="position: absolute; left: 0; top: 0; height: 3px; width: 32%; background: #A3402A;"></span></span>
+        <a href="AFlagged.dc.html" style="margin-top: 4px; font-size: 14px; color: #A3402A; font-weight: 600;">Continue with flagged →</a>
+      </section>
+      <section style="border: 1.5px solid #2A1E12; border-radius: 4px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
+        <h3 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.06em;">WHAT NEW SENDERS SEE</h3>
+        <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.4;"><input type="checkbox" checked style="width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;"><span><strong style="font-weight: 600;">Busy notice:</strong> "The line is very busy. Your note may take weeks to be heard, and some won't be."</span></label>
+        <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.4;"><input type="checkbox" style="width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;"><span><strong style="font-weight: 600;">Close the line for now.</strong> Only if the queue passes what you can reach in 30 days.</span></label>
+      </section>
+      <section style="border-radius: 4px; padding: 16px 18px; background: #EFE4D3; display: flex; flex-direction: column; gap: 8px;">
+        <h3 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.06em;">GET HELP</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.4;">Board told: surge, counts only. A second reviewer for 2 weeks halves the time.</p>
+        <button type="button" style="align-self: flex-start; height: 40px; padding: 0 16px; border: none; border-radius: 20px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 14px;">Invite a reviewer</button>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var cur = 'Traffic', line = 'busy';
+    var items = [['Overview', '', 'AOverview.dc.html'], ['Queue', '830', 'Switchboard.dc.html'], ['Flagged', '25', 'AFlagged.dc.html'], ['Scheduled', '', 'AScheduled.dc.html'], ['Published', '', 'APublished.dc.html'], ['Deletions', '3', 'ADeletions.dc.html'], ['Traffic', 'SURGE', 'ASurge.dc.html', true], ['Prompts & settings', '', 'APrompts.dc.html']];
+    var nav = items.map(function (it) { var hot = it[3] === true; return { label: it[0], count: it[1], href: it[2], active: it[0] === cur, idle: it[0] !== cur && !hot, hot: it[0] !== cur && hot }; });
+    var states = [['open', 'Open', '#9DC08B'], ['busy', 'Open · busy notice', '#E0A458'], ['paused', 'Paused', '#C9B79C']].map(function (s) { return { label: s[1], dot: s[2], on: s[0] === line, off: s[0] !== line }; });
+    var X = function (h) { return 30 + h * (606 / 72); }, Y = function (v) { return 160 - v; };
+    var pts = [];
+    for (var h = 0; h <= 72; h++) {
+      var v = h < 24 ? 0.6 + 0.4 * Math.abs(Math.sin(h)) : 3 + 92 * Math.exp(-(h - 24) / 9) * (0.85 + 0.15 * Math.abs(Math.sin(h * 1.3)));
+      pts.push(X(h).toFixed(1) + ' ' + Y(v).toFixed(1));
+    }
+    var line = 'M' + pts.join(' L');
+    var area = line + ' L' + X(72).toFixed(1) + ' 160 L' + X(0) + ' 160 Z';
+    var vx = X(24);
+    return { nav: nav, states: states, spikeLine: line, spikeArea: area, vx: vx, vxl: vx + 6 };
+  }
+}
+</script>
+</body>
+</html>

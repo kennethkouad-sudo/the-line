@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Line — library, Encouragement</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <div style="position: absolute; left: 24px; right: 24px; top: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 15px; letter-spacing: 0.14em;">THE LINE</span>
+    <a href="Mode.dc.html" style="height: 44px; padding: 0 16px; display: flex; align-items: center; border: 1.5px solid #2A1E12; border-radius: 22px; color: #2A1E12; text-decoration: none; font-size: 14px; font-weight: 600;">Leave one too</a>
+  </div>
+
+  <h1 style="position: absolute; left: 24px; top: 80px; margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 64px; line-height: 0.86;">FOR WHOEVER<br>NEEDS IT</h1>
+
+  <div role="tablist" style="position: absolute; left: 24px; right: 24px; top: 210px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1.5px solid #2A1E12; border-radius: 4px; overflow: hidden;">
+    <button type="button" role="tab" aria-selected="false" style="height: 44px; border: none; background: transparent; color: #2A1E12; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 18px; letter-spacing: 0.06em;">NOTES</button>
+    <button type="button" role="tab" aria-selected="true" style="height: 44px; border: none; background: #2A1E12; color: #F6EFE4; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 18px; letter-spacing: 0.06em;">ENCOURAGEMENT</button>
+  </div>
+
+  <a href="Note.dc.html" style="position: absolute; left: 24px; right: 24px; top: 290px; display: flex; align-items: center; gap: 14px; color: #2A1E12; text-decoration: none;">
+    <span style="width: 56px; height: 56px; flex: none; border-radius: 28px; background: #2A1E12; display: flex; align-items: center; justify-content: center;">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16"><path d="M4.5 2.5v11l9-5.5z" fill="#F6EFE4"></path></svg>
+    </span>
+    <span style="display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 20px;">PLAY ME ONE</span>
+      <span style="font-size: 13.5px; color: #5A3814;">A stranger's note for you, picked at random.</span>
+    </span>
+  </a>
+
+  <div style="position: absolute; left: 24px; top: 400px; display: flex; gap: 8px; white-space: nowrap;">
+    <sc-for list="{{themes}}" as="t" hint-placeholder-count="5">
+      <sc-if value="{{t.on}}" hint-placeholder-val="{{false}}">
+        <button type="button" aria-pressed="true" style="height: 36px; padding: 0 14px; border: 1.5px solid #2A1E12; border-radius: 18px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 14px;">{{t.name}}</button>
+      </sc-if>
+      <sc-if value="{{t.off}}" hint-placeholder-val="{{true}}">
+        <button type="button" aria-pressed="false" style="height: 36px; padding: 0 14px; border: 1.5px solid #2A1E12; border-radius: 18px; background: transparent; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 14px;">{{t.name}}</button>
+      </sc-if>
+    </sc-for>
+  </div>
+
+  <svg aria-hidden="true" width="390" height="80" viewBox="0 0 390 80" style="position: absolute; left: 0; top: 460px;">
+    <path d="M0 40 H390" fill="none" stroke="#2A1E12" stroke-width="2"></path>
+    <line x1="76" y1="40" x2="76" y2="80" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="202" y1="40" x2="202" y2="80" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="328" y1="40" x2="328" y2="80" stroke="#2A1E12" stroke-width="1.5"></line>
+  </svg>
+
+  <a href="Note.dc.html" style="position: absolute; top: 540px; left: 20px; width: 112px; height: 196px; box-sizing: border-box; padding: 0 12px 12px; display: flex; flex-direction: column; gap: 6px; background: #F6EFE4; border: 1.5px solid #5A3814; color: #2A1E12; border-radius: 3px; text-decoration: none; transform: rotate(-3deg); transform-origin: 50% 0; overflow: hidden;">
+    <svg aria-hidden="true" width="112" height="40" viewBox="0 0 112 40" style="position: absolute; left: 0; top: 0;"><path d="M0 0 L56 34 L112 0" fill="none" stroke="#5A3814" stroke-width="1.5"></path></svg>
+    <span style="margin-top: 38px; font-family: 'Caveat Brush', cursive; font-size: 17px; line-height: 1; color: #5A3814;">to whoever is lonely</span>
+    <span style="font-size: 14px; line-height: 1.3; font-style: italic;">“You're not too much. You're just in the wrong room.”</span>
+    <span style="margin-top: auto; font-size: 11.5px; color: #5A3814;">hope · 0:38</span>
+  </a>
+
+  <a href="Note.dc.html" style="position: absolute; top: 540px; left: 146px; width: 112px; height: 196px; box-sizing: border-box; padding: 0 12px 12px; display: flex; flex-direction: column; gap: 6px; background: #F6EFE4; border: 1.5px solid #5A3814; color: #2A1E12; border-radius: 3px; text-decoration: none; transform: rotate(2deg); transform-origin: 50% 0; overflow: hidden;">
+    <svg aria-hidden="true" width="112" height="40" viewBox="0 0 112 40" style="position: absolute; left: 0; top: 0;"><path d="M0 0 L56 34 L112 0" fill="none" stroke="#5A3814" stroke-width="1.5"></path></svg>
+    <span style="margin-top: 38px; font-family: 'Caveat Brush', cursive; font-size: 17px; line-height: 1; color: #5A3814;">to whoever lost a job</span>
+    <span style="font-size: 14px; line-height: 1.3; font-style: italic;">“It took me a year. The year counted.”</span>
+    <span style="margin-top: auto; font-size: 11.5px; color: #5A3814;">work · narrator · 0:44</span>
+  </a>
+
+  <a href="Note.dc.html" style="position: absolute; top: 540px; left: 272px; width: 112px; height: 196px; box-sizing: border-box; padding: 0 12px 12px; display: flex; flex-direction: column; gap: 6px; background: #F6EFE4; border: 1.5px solid #5A3814; color: #2A1E12; border-radius: 3px; text-decoration: none; transform: rotate(-1.5deg); transform-origin: 50% 0; overflow: hidden;">
+    <svg aria-hidden="true" width="112" height="40" viewBox="0 0 112 40" style="position: absolute; left: 0; top: 0;"><path d="M0 0 L56 34 L112 0" fill="none" stroke="#5A3814" stroke-width="1.5"></path></svg>
+    <span style="margin-top: 38px; font-family: 'Caveat Brush', cursive; font-size: 17px; line-height: 1; color: #5A3814;">à qui en a besoin</span>
+    <span style="font-size: 14px; line-height: 1.3; font-style: italic;">“Tu tiens encore debout. C'est déjà ça.”</span>
+    <span style="margin-top: auto; font-size: 11.5px; color: #5A3814;">FR · espoir · 0:26</span>
+  </a>
+
+  <p style="position: absolute; left: 24px; right: 24px; top: 760px; margin: 0; font-size: 13px; line-height: 1.35;">These are kind words, not advice. If you need more than a note: <a href="https://findahelpline.com">find a helpline</a>, or call <strong>112</strong> (EU) if you're in danger.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var names = ['All', 'Hope', 'Loneliness & belonging', 'Loss & grief', 'Work & purpose'];
+    return { themes: names.map(function (n) { return { name: n, on: n === 'All', off: n !== 'All' }; }) };
+  }
+}
+</script>
+</body>
+</html>

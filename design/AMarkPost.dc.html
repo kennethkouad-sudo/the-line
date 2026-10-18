@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Switchboard — mark a post</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 640px; height: 820px; box-sizing: border-box; padding: 40px; background: #5A3814; font-family: 'Source Serif 4', Georgia, serif; color: #2A1E12;">
+  <div role="dialog" aria-labelledby="mp" style="box-sizing: border-box; padding: 28px 30px; background: #F6EFE4; border: 2px solid #2A1E12; border-radius: 6px; display: flex; flex-direction: column; gap: 16px;">
+    <h1 id="mp" style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 40px; line-height: 0.9;">MARK A POST</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.45;">For anything you post that isn't a note: an announcement, a talk, a collab. It shows on the Traffic chart, so you can see what moved the numbers.</p>
+
+    <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #5A3814;">What is it?
+      <input type="text" value="Intro video: I built The Line" style="height: 44px; padding: 0 12px; border: 1.5px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 16px;">
+    </label>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #5A3814;">Where
+        <select style="height: 44px; padding: 0 10px; border: 1.5px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">
+          <option>Instagram reel</option><option>Instagram story</option><option>TikTok</option><option>LinkedIn</option><option>Other</option>
+        </select>
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #5A3814;">When
+        <input type="text" value="Now" style="height: 44px; padding: 0 12px; border: 1.5px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">
+      </label>
+    </div>
+
+    <section aria-labelledby="tl" style="padding: 16px 18px; background: #2A1E12; color: #F6EFE4; border-radius: 4px; display: flex; flex-direction: column; gap: 8px;">
+      <h2 id="tl" style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.06em;">ITS OWN LINK</h2>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="flex: 1 1 auto; padding: 10px 12px; background: #F6EFE4; color: #2A1E12; border-radius: 4px; font-family: ui-monospace, Menlo, monospace; font-size: 14px;">line.histrnger.com/?from=intro</span>
+        <button type="button" style="height: 42px; padding: 0 16px; border: none; border-radius: 21px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 14px; font-weight: 600;">Copy</button>
+      </div>
+      <p style="margin: 0; font-size: 14px; line-height: 1.45; color: #E8D9C2;">Reel captions can't hold links, so put this one in your bio before you post. Use it on story link stickers too.</p>
+    </section>
+
+    <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #5A3814;">Post link (optional, add it after posting)
+      <input type="url" placeholder="https://www.instagram.com/reel/…" style="height: 44px; padding: 0 12px; border: 1.5px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">
+    </label>
+
+    <div style="display: flex; gap: 10px; margin-top: 4px;">
+      <button type="button" style="height: 48px; padding: 0 24px; border: none; border-radius: 24px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 16px; font-weight: 600;">Save marker</button>
+      <button type="button" style="height: 48px; padding: 0 20px; border: 1.5px solid #2A1E12; border-radius: 24px; background: transparent; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 16px;">Cancel</button>
+    </div>
+    <p style="margin: 0; font-family: 'Caveat Brush', cursive; font-size: 19px; color: #5A3814;">not linked to any note. nothing about viewers is stored.</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":640,"height":820}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

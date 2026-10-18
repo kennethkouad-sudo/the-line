@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Switchboard — overview</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1000px; box-sizing: border-box; display: flex; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <nav aria-label="Switchboard" style="width: 232px; flex: none; box-sizing: border-box; padding: 28px 16px; background: #2A1E12; color: #F6EFE4; display: flex; flex-direction: column; gap: 6px;">
+    <span style="padding: 0 8px 18px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 28px; line-height: 0.95; letter-spacing: 0.03em;">THE<br>SWITCHBOARD</span>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="8">
+      <sc-if value="{{n.active}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" aria-current="page" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; background: #F6EFE4; color: #2A1E12; text-decoration: none; font-size: 15px; font-weight: 600;"><span>{{n.label}}</span><span>{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.idle}}" hint-placeholder-val="{{true}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="color: #E8D9C2;">{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.hot}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="padding: 2px 8px; border-radius: 10px; background: #A3402A; color: #F6EFE4; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 13px; letter-spacing: 0.08em;">{{n.count}}</span></a>
+      </sc-if>
+    </sc-for>
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #5A3814; display: flex; flex-direction: column; gap: 4px;">
+      <span id="line-state" style="padding: 0 8px 6px; font-size: 13px; color: #E8D9C2;">The line is</span>
+      <div role="radiogroup" aria-labelledby="line-state" style="display: flex; flex-direction: column; gap: 4px;">
+        <sc-for list="{{states}}" as="s" hint-placeholder-count="3">
+          <sc-if value="{{s.on}}" hint-placeholder-val="{{false}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-size: 14px; font-weight: 600;"><input type="radio" name="line-state" checked style="width: 16px; height: 16px; margin: 0; accent-color: #2A1E12;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+          <sc-if value="{{s.off}}" hint-placeholder-val="{{true}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; color: #F6EFE4; font-size: 14px;"><input type="radio" name="line-state" style="width: 16px; height: 16px; margin: 0; accent-color: #F6EFE4;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </nav>
+
+  <main style="flex: 1 1 auto; min-width: 0; box-sizing: border-box; padding: 36px 48px; display: flex; flex-direction: column; gap: 28px;">
+    <div style="display: flex; align-items: baseline; gap: 20px;">
+      <h1 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 64px; line-height: 0.9;">TODAY ON THE LINE</h1>
+      <span style="font-size: 16px; color: #5A3814;">Friday 16 October · open since 9 October</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px;">
+      <a href="Switchboard.dc.html" style="border-top: 2px solid #2A1E12; padding-top: 12px; color: #2A1E12; text-decoration: none; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 72px; line-height: 0.9;">23</span><span style="font-size: 15px;">waiting for you</span></a>
+      <a href="AFlagged.dc.html" style="border-top: 2px solid #A3402A; padding-top: 12px; color: #A3402A; text-decoration: none; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 72px; line-height: 0.9;">2</span><span style="font-size: 15px;">flagged · review today</span></a>
+      <a href="Switchboard.dc.html" style="border-top: 2px solid #2A1E12; padding-top: 12px; color: #2A1E12; text-decoration: none; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 72px; line-height: 0.9;">6</span><span style="font-size: 15px;">expire within 5 days</span></a>
+      <a href="AScheduled.dc.html" style="border-top: 2px solid #2A1E12; padding-top: 12px; color: #2A1E12; text-decoration: none; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 72px; line-height: 0.9;">9</span><span style="font-size: 15px;">published this week</span></a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px;">
+      <section aria-labelledby="flow" style="display: flex; flex-direction: column; gap: 10px;">
+        <h2 id="flow" style="margin: 0; font-size: 18px; font-weight: 600;">More notes arrive than you review</h2>
+        <p style="margin: 0; font-size: 14px; color: #5A3814;">Last 14 days. <span style="color: #2A1E12; font-weight: 600;">— arrived</span> · <span style="color: #5A3814; font-weight: 600;">- - reviewed</span></p>
+        <svg role="img" aria-label="Arrivals nearly tripled over 14 days while reviews stayed around 8 a day" viewBox="0 0 600 220" style="width: 100%; height: 220px;">
+          <line x1="40" y1="190" x2="590" y2="190" stroke="#2A1E12" stroke-width="1"></line>
+          <line x1="40" y1="130" x2="590" y2="130" stroke="#E8D9C2" stroke-width="1"></line>
+          <line x1="40" y1="70" x2="590" y2="70" stroke="#E8D9C2" stroke-width="1"></line>
+          <text x="30" y="194" text-anchor="end" font-size="12" fill="#5A3814">0</text>
+          <text x="30" y="134" text-anchor="end" font-size="12" fill="#5A3814">5</text>
+          <text x="30" y="74" text-anchor="end" font-size="12" fill="#5A3814">10</text>
+          <text x="40" y="212" font-size="12" fill="#5A3814">3 Oct</text>
+          <text x="590" y="212" text-anchor="end" font-size="12" fill="#5A3814">16 Oct</text>
+          <path d="{{arrived}}" fill="none" stroke="#2A1E12" stroke-width="2.25" stroke-linejoin="round"></path>
+          <path d="{{reviewed}}" fill="none" stroke="#5A3814" stroke-width="2.25" stroke-dasharray="6 5" stroke-linejoin="round"></path>
+          <text x="596" y="{{aEndY}}" text-anchor="end" font-size="13" font-weight="700" fill="#2A1E12">14</text>
+          <text x="596" y="{{rEndY}}" text-anchor="end" font-size="13" font-weight="700" fill="#5A3814">8</text>
+        </svg>
+        <p style="margin: 0; font-size: 14px; line-height: 1.45;">At this rate the queue grows by about 5 notes a day. Notes you don't reach expire after 30 days.</p>
+      </section>
+
+      <section aria-labelledby="wall" style="display: flex; flex-direction: column; gap: 10px;">
+        <h2 id="wall" style="margin: 0; font-size: 18px; font-weight: 600;">Every waiting note, by the life it has left</h2>
+        <p style="margin: 0; font-size: 14px; color: #5A3814;">Each line is one note. Full width = 30 days. <span style="color: #A3402A; font-weight: 600;">Red</span> expires within 5 days.</p>
+        <div style="display: flex; flex-direction: column; gap: 5px; padding-top: 4px;">
+          <sc-for list="{{wall}}" as="w" hint-placeholder-count="23">
+            <sc-if value="{{w.soon}}" hint-placeholder-val="{{false}}">
+              <span style="display: block; height: 3px; border-radius: 2px; background: #A3402A; width: {{w.pct}};"></span>
+            </sc-if>
+            <sc-if value="{{w.ok}}" hint-placeholder-val="{{true}}">
+              <span style="display: block; height: 3px; border-radius: 2px; background: #2A1E12; width: {{w.pct}};"></span>
+            </sc-if>
+          </sc-for>
+        </div>
+      </section>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: auto;">
+      <section style="border: 1.5px solid #2A1E12; border-radius: 4px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px;">
+        <h2 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.08em;">UP NEXT</h2>
+        <p style="margin: 0; font-size: 15px; line-height: 1.5;">Sat 17 · Instagram carousel, 3 notes<br>Sun 18 · Newsletter: <em>pick this week's note</em><br>Tue 20 · 2 notes leave their 3-day wait</p>
+        <a href="AScheduled.dc.html" style="font-size: 14px;">Open the schedule →</a>
+      </section>
+      <section style="border: 1.5px solid #2A1E12; border-radius: 4px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px;">
+        <h2 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.08em;">THIS WEEK'S PROMPT</h2>
+        <p style="margin: 0; font-family: 'Caveat Brush', cursive; font-size: 22px; line-height: 1.1; color: #5A3814;">what's the in-between you're in right now?</p>
+        <p style="margin: 0; font-size: 15px;">14 answers · 9 free notes · 6 for a stranger</p>
+        <a href="APrompts.dc.html" style="font-size: 14px;">Next week's prompt is ready →</a>
+      </section>
+      <section style="border: 1.5px solid #2A1E12; border-radius: 4px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; background: #EFE4D3;">
+        <h2 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.08em;">YOU</h2>
+        <p style="margin: 0; font-size: 15px; line-height: 1.5;">4h 10m of your 7h this week. 2 heavy notes yesterday: start with something lighter, 4 encouraging notes are waiting.</p>
+        <a href="Switchboard.dc.html" style="font-size: 14px;">Start with those →</a>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var cur = 'Overview', line = 'open';
+    var items = [['Overview', '', 'AOverview.dc.html'], ['Queue', '23', 'Switchboard.dc.html'], ['Flagged', '2', 'AFlagged.dc.html'], ['Scheduled', '', 'AScheduled.dc.html'], ['Published', '', 'APublished.dc.html'], ['Deletions', '1', 'ADeletions.dc.html'], ['Traffic', '', 'ASurge.dc.html'], ['Prompts & settings', '', 'APrompts.dc.html']];
+    var nav = items.map(function (it) { var hot = it[3] === true; return { label: it[0], count: it[1], href: it[2], active: it[0] === cur, idle: it[0] !== cur && !hot, hot: it[0] !== cur && hot }; });
+    var states = [['open', 'Open', '#9DC08B'], ['busy', 'Open · busy notice', '#E0A458'], ['paused', 'Paused', '#C9B79C']].map(function (s) { return { label: s[1], dot: s[2], on: s[0] === line, off: s[0] !== line }; });
+    var a = [3, 5, 4, 6, 8, 5, 7, 9, 6, 12, 10, 8, 14, 11, 14];
+    var r = [3, 4, 5, 5, 6, 5, 6, 7, 6, 8, 7, 7, 9, 8, 8];
+    a = a.slice(1); r = r.slice(1);
+    var X = function (i) { return 40 + i * (550 / 13); }, Y = function (v) { return 190 - v * 12; };
+    var path = function (s) { return s.map(function (v, i) { return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v); }).join(' '); };
+    var days = [29, 29, 28, 27, 26, 26, 25, 22, 21, 19, 18, 16, 15, 14, 12, 11, 9, 8, 6, 4, 3, 2, 1];
+    var wall = days.map(function (d) { return { pct: Math.round(d / 30 * 100) + '%', soon: d <= 5, ok: d > 5 }; });
+    return { nav: nav, states: states, arrived: path(a), reviewed: path(r), aEndY: Y(a[13]) - 8, rEndY: Y(r[13]) + 18, wall: wall };
+  }
+}
+</script>
+</body>
+</html>

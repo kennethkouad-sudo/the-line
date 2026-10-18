@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Line — recording (desktop)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#E8D9C2}a:hover{color:#F6EFE4}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; box-sizing: border-box; position: relative; overflow: hidden; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <p style="position: absolute; left: 64px; top: 40px; margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 18px; letter-spacing: 0.16em; color: #E8D9C2;">SAY WHAT'S ON YOUR MIND</p>
+
+  <p style="position: absolute; left: 64px; width: 980px; top: 110px; margin: 0; font-family: 'Caveat Brush', cursive; font-size: 84px; line-height: 0.98; color: #F6EFE4; transform: rotate(-1.5deg); transform-origin: left center;">what's the in-between you're in right now?</p>
+  <a href="#any" style="position: absolute; left: 68px; top: 318px; font-size: 18px;">or say anything</a>
+
+  <span style="position: absolute; left: 852px; top: 404px; width: 120px; text-align: center; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 64px; color: #F6EFE4;">0:38</span>
+
+  <svg aria-hidden="true" width="1440" height="160" viewBox="0 0 1440 160" style="position: absolute; left: 0; top: 460px;">
+    <line x1="{{tipX}}" y1="80" x2="1440" y2="80" stroke="#E8D9C2" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="2 8"></line>
+    <path d="{{wave}}" fill="none" stroke="#F6EFE4" stroke-width="2.25" stroke-linejoin="round"></path>
+    <circle cx="{{tipX}}" cy="80" r="22" fill="#F6EFE4" fill-opacity="0.12"></circle>
+    <circle cx="{{tipX}}" cy="80" r="8" fill="#F6EFE4"></circle>
+    <line x1="240" y1="134" x2="240" y2="146" stroke="#E8D9C2" stroke-opacity="0.5"></line>
+    <line x1="480" y1="134" x2="480" y2="146" stroke="#E8D9C2" stroke-opacity="0.5"></line>
+    <line x1="720" y1="134" x2="720" y2="146" stroke="#E8D9C2" stroke-opacity="0.5"></line>
+    <line x1="960" y1="134" x2="960" y2="146" stroke="#E8D9C2" stroke-opacity="0.5"></line>
+    <line x1="1200" y1="134" x2="1200" y2="146" stroke="#E8D9C2" stroke-opacity="0.5"></line>
+  </svg>
+  <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 610px; height: 20px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 600; font-size: 14px; color: #E8D9C2;">
+    <span style="position: absolute; left: 222px;">0:10</span>
+    <span style="position: absolute; left: 462px;">0:20</span>
+    <span style="position: absolute; left: 702px;">0:30</span>
+    <span style="position: absolute; left: 942px;">0:40</span>
+    <span style="position: absolute; left: 1182px;">0:50</span>
+    <span style="position: absolute; right: 16px;">1:00</span>
+  </div>
+
+  <p style="position: absolute; left: 64px; width: 620px; top: 690px; margin: 0; font-size: 22px; line-height: 1.4; font-style: italic; color: #E8D9C2;">Your voice draws the line. When it reaches the edge of the screen, you're done.</p>
+
+  <div style="position: absolute; left: 820px; right: 64px; top: 676px; display: flex; align-items: center; justify-content: flex-end; gap: 24px;">
+    <button type="button" style="height: 52px; padding: 0 24px; border: 1.5px solid #E8D9C2; border-radius: 26px; background: transparent; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 17px;">Start over</button>
+    <button type="button" aria-label="Stop recording" style="width: 104px; height: 104px; border-radius: 52px; border: 2px solid #F6EFE4; background: transparent; display: flex; align-items: center; justify-content: center;">
+      <span style="display: block; width: 34px; height: 34px; border-radius: 4px; background: #F6EFE4;"></span>
+    </button>
+    <a href="DShare.dc.html" style="height: 52px; padding: 0 30px; box-sizing: border-box; border-radius: 26px; background: #F6EFE4; color: #2A1E12; display: flex; align-items: center; text-decoration: none; font-size: 17px; font-weight: 600;">Done</a>
+  </div>
+
+  <p style="position: absolute; left: 64px; right: 64px; top: 840px; margin: 0; font-size: 14px; color: #E8D9C2;">Space bar to stop · Nothing leaves your computer until you choose to share it.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var tip = 912, pts = [];
+    for (var x = 0; x <= tip; x += 4) {
+      var i = x / 4;
+      var env = 0.22 + 0.78 * Math.abs(Math.sin(i * 0.045 + 0.6)) * (0.55 + 0.45 * Math.abs(Math.sin(i * 0.013)));
+      var osc = Math.sin(i * 1.7) * 0.62 + Math.sin(i * 0.53 + 1.1) * 0.38;
+      var y = 80 + 68 * env * osc;
+      if (x < 8) y = 80;
+      pts.push((x === 0 ? 'M' : 'L') + x + ' ' + y.toFixed(1));
+    }
+    pts.push('L' + tip + ' 80');
+    return { wave: pts.join(' '), tipX: tip };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Line — library, Love</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <div style="position: absolute; left: 12px; right: 24px; top: 16px; display: flex; justify-content: space-between; align-items: center;">
+    <a href="Library.dc.html" style="height: 44px; padding: 0 12px; display: flex; align-items: center; gap: 6px; color: #2A1E12; text-decoration: none; font-size: 14px;">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>All themes</a>
+    <a href="Mode.dc.html" style="height: 44px; padding: 0 16px; display: flex; align-items: center; border: 1.5px solid #2A1E12; border-radius: 22px; color: #2A1E12; text-decoration: none; font-size: 14px; font-weight: 600;">Leave a note</a>
+  </div>
+
+  <h1 style="position: absolute; left: 22px; top: 70px; margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 128px; line-height: 0.82;">LOVE</h1>
+  <p style="position: absolute; left: 277px; right: 20px; top: 90px; margin: 0; font-family: 'Caveat Brush', cursive; font-size: 15px; line-height: 1.1; color: #5A3814; transform: rotate(-2deg); width: 93px; height: 60px">being loved, wanting to be, and what it costs</p>
+
+  <div role="tablist" style="position: absolute; left: 24px; right: 24px; top: 194px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1.5px solid #2A1E12; border-radius: 4px; overflow: hidden;">
+    <button type="button" role="tab" aria-selected="true" style="height: 44px; border: none; background: #2A1E12; color: #F6EFE4; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 18px; letter-spacing: 0.06em;">NOTES · 18</button>
+    <button type="button" role="tab" aria-selected="false" style="height: 44px; border: none; background: transparent; color: #2A1E12; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 18px; letter-spacing: 0.06em;">ENCOURAGEMENT · 6</button>
+  </div>
+
+  <div style="position: absolute; left: 24px; top: 252px; display: flex; gap: 8px; white-space: nowrap;">
+    <sc-for list="{{themes}}" as="t" hint-placeholder-count="5">
+      <sc-if value="{{t.on}}" hint-placeholder-val="{{false}}">
+        <button type="button" aria-pressed="true" style="height: 36px; padding: 0 14px; border: 1.5px solid #2A1E12; border-radius: 18px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 14px;">{{t.name}}</button>
+      </sc-if>
+      <sc-if value="{{t.off}}" hint-placeholder-val="{{true}}">
+        <button type="button" aria-pressed="false" style="height: 36px; padding: 0 14px; border: 1.5px solid #2A1E12; border-radius: 18px; background: transparent; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 14px;">{{t.name}}</button>
+      </sc-if>
+    </sc-for>
+  </div>
+
+  <div style="position: absolute; left: 24px; right: 24px; top: 318px; display: flex; align-items: center; gap: 14px;">
+    <button type="button" aria-label="Play all notes about love" style="width: 56px; height: 56px; flex: none; border-radius: 28px; border: none; background: #2A1E12; display: flex; align-items: center; justify-content: center;">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16"><path d="M4.5 2.5v11l9-5.5z" fill="#F6EFE4"></path></svg>
+    </button>
+    <div style="display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 20px;">PLAY ALL 18</span>
+      <span style="font-size: 13.5px; color: #5A3814;">One stranger after another, newest first.</span>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 24px; top: 400px; display: flex; gap: 6px; font-size: 13px;">
+    <span style="color: #5A3814;">Sort:</span>
+    <button type="button" aria-pressed="true" style="border: none; background: transparent; padding: 0; color: #2A1E12; font-family: inherit; font-size: 13px; font-weight: 700; text-decoration: underline;">newest</button>
+    <span style="color: #5A3814;">·</span>
+    <button type="button" aria-pressed="false" style="border: none; background: transparent; padding: 0; color: #2A1E12; font-family: inherit; font-size: 13px;">shuffle</button>
+  </div>
+
+  <svg aria-hidden="true" width="390" height="80" viewBox="0 0 390 80" style="position: absolute; left: 0; top: 460px;">
+    <path d="M0 40 H390" fill="none" stroke="#2A1E12" stroke-width="2"></path>
+    <line x1="76" y1="40" x2="76" y2="84" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="202" y1="40" x2="202" y2="84" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="328" y1="40" x2="328" y2="84" stroke="#2A1E12" stroke-width="1.5"></line>
+  </svg>
+
+  <a href="Note.dc.html" style="position: absolute; left: 20px; top: 536px; width: 112px; height: 184px; box-sizing: border-box; padding: 14px 12px 12px; display: flex; flex-direction: column; gap: 6px; background: #E8D9C2; color: #2A1E12; border-radius: 4px; text-decoration: none; transform: rotate(-3deg); transform-origin: 50% 0;">
+    <span style="font-family: 'Caveat Brush', cursive; font-size: 17px; line-height: 1; color: #5A3814;">love</span>
+    <span style="font-size: 14px; line-height: 1.3; font-style: italic;">“Eleven years in, and I still get nervous calling him.”</span>
+    <span style="margin-top: auto; font-size: 11.5px; color: #5A3814;">own voice · 0:41</span>
+  </a>
+
+  <a href="Note.dc.html" style="position: absolute; left: 146px; top: 536px; width: 112px; height: 184px; box-sizing: border-box; padding: 14px 12px 12px; display: flex; flex-direction: column; gap: 6px; background: #E8D9C2; color: #2A1E12; border-radius: 4px; text-decoration: none; transform: rotate(2deg); transform-origin: 50% 0;">
+    <span style="font-family: 'Caveat Brush', cursive; font-size: 17px; line-height: 1; color: #5A3814;">love · regret</span>
+    <span style="font-size: 14px; line-height: 1.3; font-style: italic;">“I said it first. She said thank you.”</span>
+    <span style="margin-top: auto; font-size: 11.5px; color: #5A3814;">narrator · 0:29</span>
+  </a>
+
+  <a href="Note.dc.html" style="position: absolute; left: 272px; top: 536px; width: 112px; height: 184px; box-sizing: border-box; padding: 14px 12px 12px; display: flex; flex-direction: column; gap: 6px; background: #E8D9C2; color: #2A1E12; border-radius: 4px; text-decoration: none; transform: rotate(-1.5deg); transform-origin: 50% 0;">
+    <span style="font-family: 'Caveat Brush', cursive; font-size: 17px; line-height: 1; color: #5A3814;">amour · famille</span>
+    <span style="font-size: 14px; line-height: 1.3; font-style: italic;">“Je l'aime, et je n'ose pas le dire à mes parents.”</span>
+    <span style="margin-top: auto; font-size: 11.5px; color: #5A3814;">FR · own voice · 0:52</span>
+  </a>
+
+  <p style="position: absolute; left: 24px; right: 24px; top: 744px; margin: 0; font-family: 'Caveat Brush', cursive; font-size: 20px; color: #5A3814; text-align: right;">15 more along the line →</p>
+
+  <p style="position: absolute; left: 24px; right: 24px; top: 790px; margin: 0; font-size: 13px; line-height: 1.35;">Struggling right now? <a href="https://findahelpline.com">Find a helpline</a>. In immediate danger? Call <strong>112</strong> (EU).</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var names = ['All', 'Love', 'Family', 'Loneliness & belonging', 'Loss & grief'];
+    return { themes: names.map(function (n) { return { name: n, on: n === 'Love', off: n !== 'Love' }; }) };
+  }
+}
+</script>
+</body>
+</html>

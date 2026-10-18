@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Line — let it go, or share it</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 390px; height: 1320px; box-sizing: border-box; position: relative; overflow: hidden; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <div style="position: absolute; left: 24px; right: 24px; top: 24px; height: 52px; display: flex; align-items: center; gap: 12px; border: 1.5px solid #2A1E12; border-radius: 26px; padding: 0 16px 0 4px;">
+    <button type="button" aria-label="Listen back" style="width: 44px; height: 44px; border-radius: 22px; border: none; background: #2A1E12; display: flex; align-items: center; justify-content: center;">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="#F6EFE4"></path></svg>
+    </button>
+    <svg aria-hidden="true" width="210" height="28" viewBox="0 0 210 28" style="flex: 1 1 auto;"><path d="{{mini}}" fill="none" stroke="#2A1E12" stroke-width="1.5"></path></svg>
+    <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 17px;">0:42</span>
+  </div>
+
+  <h1 style="position: absolute; left: 24px; top: 104px; margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 84px; line-height: 0.84;">WHAT NOW?</h1>
+
+  <button type="button" style="position: absolute; left: 24px; right: 24px; top: 210px; height: 112px; box-sizing: border-box; padding: 16px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; border: 2px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+    <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 28px;">LET IT GO</span>
+    <span style="font-size: 15px; line-height: 1.35;">Keep it to yourself. Nothing is uploaded or saved. Saying it was the point.</span>
+  </button>
+
+  <button type="button" aria-pressed="true" style="position: absolute; left: 24px; right: 24px; top: 338px; height: 112px; box-sizing: border-box; padding: 16px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; border: 2px solid #2A1E12; border-radius: 4px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif;">
+    <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 28px;">SHARE IT</span>
+    <span style="font-size: 15px; line-height: 1.35;">Put it on the line for a stranger to hear, without your name.</span>
+  </button>
+
+  <svg aria-hidden="true" width="390" height="60" viewBox="0 0 390 60" style="position: absolute; left: 0; top: 470px;">
+    <path d="M0 30 H176 C186 30 192 10 202 10 C214 10 214 30 200 34 C190 37 190 26 204 26 C214 26 220 30 230 30 H390" fill="none" stroke="#2A1E12" stroke-width="2" stroke-linejoin="round"></path>
+  </svg>
+  <span style="position: absolute; left: 238px; top: 448px; font-family: 'Caveat Brush', cursive; font-size: 18px; color: #5A3814;">tie it on</span>
+
+  <div style="position: absolute; left: 24px; right: 24px; top: 548px; display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="margin: 0; font-size: 22px; font-weight: 600;">Before it goes on the line</h2>
+
+    <label style="display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.4;">
+      <input type="checkbox" style="width: 22px; height: 22px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;">
+      <span>Store and process my note. It may say things about my health or my life.</span>
+    </label>
+    <label style="display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.4;">
+      <input type="checkbox" style="width: 22px; height: 22px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;">
+      <span>Share it without my name on social posts, the newsletter and <a href="#library">The Line library</a>, a page where anyone can listen to strangers' notes, sorted by theme. It stays there until I delete it with my private link.</span>
+    </label>
+    <label style="display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.4;">
+      <input type="checkbox" style="width: 22px; height: 22px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;">
+      <span>Let Strnger edit, translate and re-voice it.</span>
+    </label>
+
+    <fieldset style="margin: 6px 0 0; padding: 0; border: none; display: flex; flex-direction: column; gap: 8px;">
+      <legend style="padding: 0; margin-bottom: 8px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 20px; letter-spacing: 0.04em;">WHOSE VOICE?</legend>
+      <label style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border: 1.5px solid #2A1E12; border-radius: 4px; font-size: 15px; line-height: 1.35;">
+        <input type="radio" name="voice" style="width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: #2A1E12;">
+        <span><strong>My own voice.</strong> People who know you may recognise it. Once shared, others could record it.</span>
+      </label>
+      <label style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border: 1.5px solid #2A1E12; border-radius: 4px; font-size: 15px; line-height: 1.35;">
+        <input type="radio" name="voice" style="width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: #2A1E12;">
+        <span><strong>A narrator's voice.</strong> Your words, read by someone else.</span>
+      </label>
+    </fieldset>
+
+    <fieldset style="margin: 6px 0 0; padding: 0; border: none; display: flex; flex-direction: column; gap: 8px;">
+      <legend style="padding: 0; margin-bottom: 8px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 20px; letter-spacing: 0.04em;">WHEN?</legend>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+        <label style="display: flex; gap: 10px; align-items: flex-start; padding: 12px; border: 1.5px solid #2A1E12; border-radius: 4px; font-size: 15px; line-height: 1.3;">
+          <input type="radio" name="when" style="width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;">
+          <span>Once it's reviewed</span>
+        </label>
+        <label style="display: flex; gap: 10px; align-items: flex-start; padding: 12px; border: 1.5px solid #2A1E12; border-radius: 4px; font-size: 15px; line-height: 1.3;">
+          <input type="radio" name="when" style="width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;">
+          <span>Give me 3 days to think</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <p style="margin: 4px 0 0; font-family: 'Caveat Brush', cursive; font-size: 22px; line-height: 1.15; color: #5A3814;">a person reviews every note before it's shared.</p>
+
+    <a href="Ticket.dc.html" style="height: 58px; display: flex; align-items: center; justify-content: center; border-radius: 4px; background: #2A1E12; color: #F6EFE4; text-decoration: none; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 24px; letter-spacing: 0.06em;">PUT IT ON THE LINE</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1320}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var pts = [];
+    for (var x = 0; x <= 210; x += 3) {
+      var i = x / 3;
+      var env = 0.3 + 0.7 * Math.abs(Math.sin(i * 0.13 + 0.4));
+      var y = 14 + 11 * env * (Math.sin(i * 1.6) * 0.6 + Math.sin(i * 0.47 + 1) * 0.4);
+      pts.push((x === 0 ? 'M' : 'L') + x + ' ' + y.toFixed(1));
+    }
+    return { mini: pts.join(' ') };
+  }
+}
+</script>
+</body>
+</html>

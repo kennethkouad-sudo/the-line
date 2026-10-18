@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Switchboard — scheduled</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1000px; box-sizing: border-box; position: relative; display: flex; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <nav aria-label="Switchboard" style="width: 232px; flex: none; box-sizing: border-box; padding: 28px 16px; background: #2A1E12; color: #F6EFE4; display: flex; flex-direction: column; gap: 6px;">
+    <span style="padding: 0 8px 18px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 28px; line-height: 0.95; letter-spacing: 0.03em;">THE<br>SWITCHBOARD</span>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="8">
+      <sc-if value="{{n.active}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" aria-current="page" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; background: #F6EFE4; color: #2A1E12; text-decoration: none; font-size: 15px; font-weight: 600;"><span>{{n.label}}</span><span>{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.idle}}" hint-placeholder-val="{{true}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="color: #E8D9C2;">{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.hot}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="padding: 2px 8px; border-radius: 10px; background: #A3402A; color: #F6EFE4; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 13px; letter-spacing: 0.08em;">{{n.count}}</span></a>
+      </sc-if>
+    </sc-for>
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #5A3814; display: flex; flex-direction: column; gap: 4px;">
+      <span id="line-state" style="padding: 0 8px 6px; font-size: 13px; color: #E8D9C2;">The line is</span>
+      <div role="radiogroup" aria-labelledby="line-state" style="display: flex; flex-direction: column; gap: 4px;">
+        <sc-for list="{{states}}" as="s" hint-placeholder-count="3">
+          <sc-if value="{{s.on}}" hint-placeholder-val="{{false}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-size: 14px; font-weight: 600;"><input type="radio" name="line-state" checked style="width: 16px; height: 16px; margin: 0; accent-color: #2A1E12;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+          <sc-if value="{{s.off}}" hint-placeholder-val="{{true}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; color: #F6EFE4; font-size: 14px;"><input type="radio" name="line-state" style="width: 16px; height: 16px; margin: 0; accent-color: #F6EFE4;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </nav>
+
+  <div role="dialog" aria-labelledby="place-title" style="position: absolute; left: 610px; top: 318px; width: 384px; box-sizing: border-box; padding: 20px 22px; background: #F6EFE4; border: 2px solid #2A1E12; border-radius: 6px; box-shadow: 6px 6px 0 #2A1E12; display: flex; flex-direction: column; gap: 14px; z-index: 2;">
+    <h2 id="place-title" style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 20px; letter-spacing: 0.06em;">THU 22 · INSTAGRAM</h2>
+    <p style="margin: 0; font-size: 15px; line-height: 1.4;"><em>"I'm good at a job I hate."</em><br><span style="font-size: 13px; color: #5A3814;">own voice · 0:52 · work &amp; purpose</span></p>
+    <fieldset style="margin: 0; padding: 0; border: none; display: flex; flex-direction: column; gap: 8px;">
+      <legend style="padding: 0; margin-bottom: 8px; font-size: 13px; color: #5A3814;">Post it as</legend>
+      <label style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1.5px solid #2A1E12; border-radius: 4px; font-size: 14px; line-height: 1.35;"><input type="radio" name="fmt" style="width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;"><span><strong style="font-weight: 600;">Reel.</strong> This note alone: their voice, captions over the line.</span></label>
+      <label style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 2px solid #2A1E12; border-radius: 4px; background: #E8D9C2; font-size: 14px; line-height: 1.35;"><input type="radio" name="fmt" checked style="width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;"><span><strong style="font-weight: 600;">Carousel slide.</strong> With other strangers' notes on the same theme.</span></label>
+      <label style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1.5px solid #2A1E12; border-radius: 4px; font-size: 14px; line-height: 1.35;"><input type="radio" name="fmt" style="width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;"><span><strong style="font-weight: 600;">Story.</strong> 24 hours, link sticker to the note.</span></label>
+    </fieldset>
+    <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #5A3814;">Add to
+      <select style="height: 42px; padding: 0 10px; border: 1.5px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">
+        <option>Work &amp; purpose · Thu 22 · 2 notes so far</option>
+        <option>A new carousel</option>
+      </select>
+    </label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <a href="ACarousel.dc.html" style="height: 44px; padding: 0 20px; display: flex; align-items: center; border-radius: 22px; background: #2A1E12; color: #F6EFE4; text-decoration: none; font-size: 15px; font-weight: 600;">Place and open carousel</a>
+      <button type="button" style="height: 44px; padding: 0 18px; border: 1.5px solid #2A1E12; border-radius: 22px; background: transparent; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">Cancel</button>
+    </div>
+  </div>
+
+  <main style="flex: 1 1 auto; min-width: 0; box-sizing: border-box; padding: 36px 40px; display: flex; gap: 28px;">
+    <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 22px;">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <h1 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 56px; line-height: 0.9;">THIS WEEK</h1>
+        <span style="display: flex; align-items: center; gap: 4px;">
+          <button type="button" aria-label="Previous week" style="width: 40px; height: 40px; border-radius: 20px; border: 1.5px solid #2A1E12; background: transparent; color: #2A1E12; display: flex; align-items: center; justify-content: center;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
+          <span style="font-size: 16px; padding: 0 8px;">19–25 October</span>
+          <button type="button" aria-label="Next week" style="width: 40px; height: 40px; border-radius: 20px; border: 1.5px solid #2A1E12; background: transparent; color: #2A1E12; display: flex; align-items: center; justify-content: center;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></button>
+        </span>
+        <div style="margin-left: auto; display: flex; border: 1.5px solid #2A1E12; border-radius: 4px; overflow: hidden;">
+          <a href="AScheduled.dc.html" aria-current="page" style="height: 40px; padding: 0 16px; display: flex; align-items: center; background: #2A1E12; color: #F6EFE4; text-decoration: none; font-size: 14px;">Scheduled</a>
+          <a href="APublished.dc.html" style="height: 40px; padding: 0 16px; display: flex; align-items: center; color: #2A1E12; text-decoration: none; font-size: 14px;">Published</a>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 112px repeat(7, minmax(0, 1fr)); border-top: 2px solid #2A1E12;">
+        <span></span>
+        <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+          <span style="padding: 10px 8px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 17px; letter-spacing: 0.06em; border-left: 1px solid #E8D9C2;">{{d}}</span>
+        </sc-for>
+        <sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
+          <span style="padding: 14px 8px 14px 0; border-top: 1.5px solid #2A1E12; font-size: 15px; font-weight: 600; min-height: 170px;">{{r.name}}<br><span style="font-weight: 400; font-size: 12.5px; color: #5A3814;">{{r.note}}</span></span>
+          <sc-for list="{{r.cells}}" as="c" hint-placeholder-count="7">
+            <div style="border-top: 1.5px solid #2A1E12; border-left: 1px solid #E8D9C2; padding: 8px 6px; display: flex; flex-direction: column; gap: 6px; min-height: 170px;">
+              <sc-for list="{{c}}" as="it" hint-placeholder-count="1">
+                <sc-if value="{{it.pick}}" hint-placeholder-val="{{false}}">
+                  <span style="padding: 8px; border-radius: 3px; background: #2A1E12; color: #F6EFE4; font-size: 12.5px; line-height: 1.3;"><span style="display: block; font-family: 'Caveat Brush', cursive; font-size: 15px; color: #E8D9C2;">{{it.tag}}</span>{{it.text}}</span>
+                </sc-if>
+                <sc-if value="{{it.hold}}" hint-placeholder-val="{{false}}">
+                  <span style="padding: 8px; border-radius: 3px; border: 1.5px dashed #5A3814; color: #2A1E12; font-size: 12.5px; line-height: 1.3;"><span style="display: block; font-family: 'Caveat Brush', cursive; font-size: 15px; color: #5A3814;">{{it.tag}}</span>{{it.text}}</span>
+                </sc-if>
+                <sc-if value="{{it.plain}}" hint-placeholder-val="{{true}}">
+                  <span style="padding: 8px; border-radius: 3px; background: #E8D9C2; color: #2A1E12; font-size: 12.5px; line-height: 1.3;"><span style="display: block; font-family: 'Caveat Brush', cursive; font-size: 15px; color: #5A3814;">{{it.tag}}</span>{{it.text}}</span>
+                </sc-if>
+              </sc-for>
+            </div>
+          </sc-for>
+        </sc-for>
+      </div>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5;"><strong style="font-weight: 600;">Who posts what:</strong> the library publishes itself. Instagram and the newsletter are yours: on the day, the switchboard hands you the files and caption, you post, then you paste the post link here. That link is what moves it to Published and makes takedowns possible.</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5A3814;">Dashed: still in its 3-day wait. It moves to the day it's released and can still be deleted by its sender until then. Library notes go live as soon as they're approved, unless they're waiting.</p>
+    </div>
+
+    <aside aria-label="Approved, not placed" style="width: 280px; flex: none; display: flex; flex-direction: column; gap: 12px; padding-top: 6px;">
+      <h2 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 20px; letter-spacing: 0.06em;">APPROVED, NOT PLACED · 3</h2>
+      <p style="margin: 0; font-size: 14px; color: #5A3814;">Drag onto a day, or let them go to the library only.</p>
+      <sc-for list="{{unplaced}}" as="u" hint-placeholder-count="4">
+        <div style="padding: 12px 14px; border: 1.5px solid #2A1E12; border-radius: 4px; display: flex; flex-direction: column; gap: 4px; cursor: grab;">
+          <span style="font-family: 'Caveat Brush', cursive; font-size: 17px; color: #5A3814;">{{u.tag}}</span>
+          <span style="font-size: 15px; line-height: 1.35; font-style: italic;">{{u.text}}</span>
+          <span style="font-size: 12.5px; color: #5A3814;">{{u.meta}}</span>
+        </div>
+      </sc-for>
+      <section style="margin-top: 10px; padding: 16px; border-radius: 4px; background: #EFE4D3; display: flex; flex-direction: column; gap: 6px;">
+        <h3 style="margin: 0; font-size: 15px; font-weight: 600;">Sunday's newsletter</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.45;">"A stranger said this" is picked. Its image, quote and links are ready to paste into beehiiv.</p>
+        <a href="ANewsletter.dc.html" style="font-size: 14px; font-weight: 600;">Open the newsletter kit →</a>
+      </section>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var cur = 'Scheduled', line = 'open';
+    var items = [['Overview', '', 'AOverview.dc.html'], ['Queue', '23', 'Switchboard.dc.html'], ['Flagged', '2', 'AFlagged.dc.html'], ['Scheduled', '', 'AScheduled.dc.html'], ['Published', '', 'APublished.dc.html'], ['Deletions', '1', 'ADeletions.dc.html'], ['Traffic', '', 'ASurge.dc.html'], ['Prompts & settings', '', 'APrompts.dc.html']];
+    var nav = items.map(function (it) { var hot = it[3] === true; return { label: it[0], count: it[1], href: it[2], active: it[0] === cur, idle: it[0] !== cur && !hot, hot: it[0] !== cur && hot }; });
+    var states = [['open', 'Open', '#9DC08B'], ['busy', 'Open · busy notice', '#E0A458'], ['paused', 'Paused', '#C9B79C']].map(function (s) { return { label: s[1], dot: s[2], on: s[0] === line, off: s[0] !== line }; });
+    var P = function (tag, text) { return { tag: tag, text: text, plain: true, hold: false, pick: false }; };
+    var H = function (tag, text) { return { tag: tag, text: text, plain: false, hold: true, pick: false }; };
+    var K = function (tag, text) { return { tag: tag, text: text, plain: false, hold: false, pick: true }; };
+    var rows = [
+      { name: 'Instagram', note: 'carousels, reels', cells: [[P('reel', '"I still keep his voicemail."')], [], [P('carousel · 3', 'The in-between, week 2')], [K('carousel · 2 + 1', 'Work & purpose · placing…')], [H('releases Fri', '"Not knowing yet…"')], [P('carousel · 3', 'Love')], []] },
+      { name: 'Newsletter', note: 'Dear Stranger, Sundays', cells: [[], [], [], [], [], [], [K('a stranger said this', '"I stopped apologising for existing." FR')]] },
+      { name: 'Library', note: 'live on approval', cells: [[P('live', '3 notes')], [P('live', '2 notes')], [H('releases Tue', '1 note')], [P('live', '1 note')], [], [H('releases Sat', '2 notes')], []] }
+    ];
+    var unplaced = [
+      { tag: 'hope · encouragement', text: '"You’re not too much."', meta: 'own voice · 0:38' },
+      { tag: 'love', text: '"We met on a train."', meta: 'narrator · 0:33' },
+      { tag: 'famille', text: '"Je l’aime, et je n’ose pas…"', meta: 'FR · own voice · 0:52' }
+    ];
+    return { nav: nav, states: states, days: ['MON 19', 'TUE 20', 'WED 21', 'THU 22', 'FRI 23', 'SAT 24', 'SUN 25'], rows: rows, unplaced: unplaced };
+  }
+}
+</script>
+</body>
+</html>

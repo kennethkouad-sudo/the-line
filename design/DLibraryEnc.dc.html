@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Line — library, Encouragement (desktop)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; box-sizing: border-box; position: relative; overflow: hidden; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <nav style="position: absolute; left: 64px; right: 64px; top: 24px; display: flex; align-items: center; gap: 28px;">
+    <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.16em; margin-right: auto;">THE LINE <span style="font-weight: 600; letter-spacing: 0.1em; color: #5A3814;">BY STRNGER</span></span>
+    <a href="DMode.dc.html" style="height: 48px; padding: 0 22px; display: flex; align-items: center; border-radius: 24px; background: #2A1E12; color: #F6EFE4; text-decoration: none; font-size: 16px; font-weight: 600;">Leave one for someone</a>
+  </nav>
+
+  <h1 style="position: absolute; left: 58px; top: 96px; margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 150px; line-height: 0.84;">FOR WHOEVER<br>NEEDS IT</h1>
+
+  <div style="position: absolute; left: 880px; width: 496px; top: 108px; display: flex; flex-direction: column; gap: 18px;">
+    <div role="tablist" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1.5px solid #2A1E12; border-radius: 4px; overflow: hidden;">
+      <a href="DLibrary.dc.html" role="tab" aria-selected="false" style="height: 50px; display: flex; align-items: center; justify-content: center; color: #2A1E12; text-decoration: none; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 20px; letter-spacing: 0.06em;">NOTES</a>
+      <a href="DLibraryEnc.dc.html" role="tab" aria-selected="true" style="height: 50px; display: flex; align-items: center; justify-content: center; background: #2A1E12; color: #F6EFE4; text-decoration: none; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 20px; letter-spacing: 0.06em;">ENCOURAGEMENT</a>
+    </div>
+    <a href="DNote.dc.html" style="display: flex; align-items: center; gap: 18px; color: #2A1E12; text-decoration: none;">
+      <span style="width: 68px; height: 68px; flex: none; border-radius: 34px; background: #2A1E12; display: flex; align-items: center; justify-content: center;">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 16 16"><path d="M4.5 2.5v11l9-5.5z" fill="#F6EFE4"></path></svg>
+      </span>
+      <span style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 26px; line-height: 1;">PLAY ME ONE</span>
+        <span style="font-size: 15px; color: #5A3814;">A stranger's note for you, picked at random.</span>
+      </span>
+    </a>
+    <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #5A3814;">These are kind words, not advice. If you need more than a note, <a href="https://findahelpline.com">find a helpline</a>.</p>
+  </div>
+
+  <div style="position: absolute; left: 64px; right: 64px; top: 392px; display: flex; flex-wrap: wrap; gap: 8px;">
+    <sc-for list="{{themes}}" as="t" hint-placeholder-count="10">
+      <sc-if value="{{t.on}}" hint-placeholder-val="{{false}}">
+        <button type="button" aria-pressed="true" style="height: 40px; padding: 0 18px; border: 1.5px solid #2A1E12; border-radius: 20px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">{{t.name}}</button>
+      </sc-if>
+      <sc-if value="{{t.off}}" hint-placeholder-val="{{true}}">
+        <button type="button" aria-pressed="false" style="height: 40px; padding: 0 18px; border: 1.5px solid #2A1E12; border-radius: 20px; background: transparent; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">{{t.name}}</button>
+      </sc-if>
+    </sc-for>
+  </div>
+
+  <svg aria-hidden="true" width="1440" height="100" viewBox="0 0 1440 100" style="position: absolute; left: 0; top: 490px;">
+    <path d="M0 50 H1440" fill="none" stroke="#2A1E12" stroke-width="2"></path>
+    <line x1="154" y1="50" x2="154" y2="96" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="374" y1="50" x2="374" y2="96" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="594" y1="50" x2="594" y2="96" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="814" y1="50" x2="814" y2="96" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="1034" y1="50" x2="1034" y2="96" stroke="#2A1E12" stroke-width="1.5"></line>
+    <line x1="1254" y1="50" x2="1254" y2="96" stroke="#2A1E12" stroke-width="1.5"></line>
+  </svg>
+
+  <sc-for list="{{letters}}" as="l" hint-placeholder-count="6">
+    <div style="position: absolute; top: 584px; width: 180px; height: 230px; left: {{l.left}}; transform: rotate({{l.rot}}); transform-origin: 50% 0;">
+      <a href="DNote.dc.html" style="position: absolute; inset: 0; box-sizing: border-box; padding: 0 16px 16px; display: flex; flex-direction: column; gap: 8px; background: #F6EFE4; border: 1.5px solid #5A3814; color: #2A1E12; border-radius: 3px; text-decoration: none; overflow: hidden;">
+        <svg aria-hidden="true" width="180" height="56" viewBox="0 0 180 56" style="position: absolute; left: 0; top: 0;"><path d="M0 0 L90 48 L180 0" fill="none" stroke="#5A3814" stroke-width="1.5"></path></svg>
+        <span style="margin-top: 56px; font-family: 'Caveat Brush', cursive; font-size: 21px; line-height: 1; color: #5A3814;">{{l.to}}</span>
+        <span style="font-size: 17px; line-height: 1.3; font-style: italic;">{{l.text}}</span>
+        <span style="margin-top: auto; font-size: 13px; color: #5A3814;">{{l.meta}}</span>
+      </a>
+    </div>
+  </sc-for>
+
+  <div style="position: absolute; left: 64px; right: 64px; top: 846px; display: flex; align-items: center; gap: 24px; font-size: 14px;">
+    <span>Struggling right now? <a href="https://findahelpline.com">Find a helpline</a>. In immediate danger? Call <strong>112</strong> (EU).</span>
+    <span style="margin-left: auto; font-family: 'Caveat Brush', cursive; font-size: 22px; color: #5A3814;">more along the line →</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var names = ['All', 'Love', 'Family', 'Loneliness & belonging', 'Loss & grief', 'Work & purpose', 'Finding myself', 'The in-between', 'Regret & forgiveness', 'Hope'];
+    var themes = names.map(function (n) { return { name: n, on: n === 'All', off: n !== 'All' }; });
+    var letters = [
+      { left: '64px', rot: '-3deg', to: 'to whoever is lonely', text: '“You’re not too much. You’re just in the wrong room.”', meta: 'hope · own voice · 0:38' },
+      { left: '284px', rot: '2deg', to: 'to whoever lost a job', text: '“It took me a year. The year counted.”', meta: 'work · narrator · 0:44' },
+      { left: '504px', rot: '-1.5deg', to: 'à qui en a besoin', text: '“Tu tiens encore debout. C’est déjà ça.”', meta: 'FR · espoir · 0:26' },
+      { left: '724px', rot: '2.5deg', to: 'to whoever is grieving', text: '“The second year is different, not easier. You’ll find your way through it.”', meta: 'loss · own voice · 0:51' },
+      { left: '944px', rot: '-2deg', to: 'to whoever just moved', text: '“Say yes to the first invitation, even the boring one.”', meta: 'belonging · 0:33' },
+      { left: '1164px', rot: '1.5deg', to: 'to whoever is in between', text: '“Not knowing yet is not the same as failing.”', meta: 'in-between · narrator · 0:29' }
+    ];
+    return { themes: themes, letters: letters };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Line — one note (desktop)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; box-sizing: border-box; position: relative; overflow: hidden; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <nav style="position: absolute; left: 64px; right: 64px; top: 28px; display: flex; align-items: center; gap: 28px;">
+    <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.16em;">A STRANGER SAID THIS</span>
+    <span style="font-size: 16px; color: #5A3814; margin-right: auto;">Finding myself · Notes · audio in French</span>
+    <a href="DLibrary.dc.html" style="font-size: 16px;">The library</a>
+  </nav>
+
+  <blockquote style="position: absolute; left: 64px; width: 780px; top: 110px; margin: 0; font-size: 72px; line-height: 1.04; font-style: italic; font-weight: 500;">“I stopped apologising for existing.”</blockquote>
+  <p style="position: absolute; left: 68px; top: 400px; margin: 0; font-family: 'Caveat Brush', cursive; font-size: 26px; color: #5A3814;">translated by Strnger</p>
+
+  <div style="position: absolute; left: 920px; width: 456px; top: 150px; display: flex; flex-direction: column; gap: 20px;">
+    <button type="button" aria-label="Play the note" style="width: 112px; height: 112px; border-radius: 56px; border: none; background: #2A1E12; display: flex; align-items: center; justify-content: center;">
+      <svg aria-hidden="true" width="38" height="38" viewBox="0 0 16 16"><path d="M4.5 2.5v11l9-5.5z" fill="#F6EFE4"></path></svg>
+    </button>
+    <span style="font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 48px; line-height: 1;">0:14 / 0:33</span>
+    <span style="font-size: 16px; color: #5A3814;">In their own voice. Names have been replaced with a soft tone.</span>
+  </div>
+
+  <svg aria-hidden="true" width="1440" height="120" viewBox="0 0 1440 120" style="position: absolute; left: 0; top: 480px;">
+    <path d="{{played}}" fill="none" stroke="#2A1E12" stroke-width="2.25" stroke-linejoin="round"></path>
+    <path d="{{rest}}" fill="none" stroke="#5A3814" stroke-opacity="0.45" stroke-width="2.25" stroke-linejoin="round"></path>
+    <rect x="300" y="36" width="44" height="48" rx="4" fill="#E8D9C2"></rect>
+    <circle cx="{{head}}" cy="60" r="8" fill="#2A1E12"></circle>
+  </svg>
+  <span style="position: absolute; left: 296px; top: 610px; font-family: 'Caveat Brush', cursive; font-size: 18px; color: #5A3814;">a name, toned out</span>
+
+  <div style="position: absolute; left: 64px; width: 780px; top: 650px; display: flex; flex-direction: column; gap: 16px;">
+    <div role="tablist" style="display: flex; gap: 8px;">
+      <button type="button" role="tab" aria-selected="false" style="height: 38px; padding: 0 16px; border: 1.5px solid #2A1E12; border-radius: 19px; background: transparent; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">Français</button>
+      <button type="button" role="tab" aria-selected="true" style="height: 38px; padding: 0 16px; border: 1.5px solid #2A1E12; border-radius: 19px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px;">English</button>
+    </div>
+    <p style="margin: 0; font-size: 20px; line-height: 1.55;">My sister <span style="display: inline-block; padding: 0 10px; border-radius: 11px; background: #E8D9C2; color: #5A3814; font-size: 15px; line-height: 24px; font-style: italic;">name</span> used to say I took up too much room. For years I said sorry before every sentence. This year I stopped. If you're doing the same: you're allowed to be here.</p>
+  </div>
+
+  <div style="position: absolute; left: 920px; width: 456px; top: 650px; display: flex; flex-direction: column; gap: 14px;">
+    <a href="DMode.dc.html" style="height: 64px; display: flex; align-items: center; justify-content: center; border-radius: 4px; background: #2A1E12; color: #F6EFE4; text-decoration: none; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 26px; letter-spacing: 0.06em;">TELL A STRANGER SOMETHING</a>
+    <a href="DLibrary.dc.html" style="font-size: 16px;">More notes on finding myself →</a>
+    <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.45;"><a href="https://findahelpline.com">Find a helpline</a> · In danger? Call <strong>112</strong> (EU) · <a href="#report">Report this note</a></p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var head = 611, a = [], b = [];
+    for (var x = 0; x <= 1440; x += 4) {
+      var i = x / 4;
+      var env = 0.2 + 0.8 * Math.abs(Math.sin(i * 0.035 + 0.3)) * (0.6 + 0.4 * Math.abs(Math.sin(i * 0.011 + 1)));
+      var y = 60 + 46 * env * (Math.sin(i * 1.65) * 0.6 + Math.sin(i * 0.51 + 0.7) * 0.4);
+      if (x < 12 || x > 1428 || (x > 300 && x < 344)) y = 60;
+      var p = x + ' ' + y.toFixed(1);
+      if (x <= head + 4) a.push((a.length ? 'L' : 'M') + p);
+      if (x >= head) b.push((b.length ? 'L' : 'M') + p);
+    }
+    return { played: a.join(' '), rest: b.join(' '), head: head };
+  }
+}
+</script>
+</body>
+</html>

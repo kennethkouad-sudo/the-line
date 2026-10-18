@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Switchboard — queue</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&amp;family=Caveat+Brush&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5A3814}a:hover{color:#2A1E12}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1000px; box-sizing: border-box; display: flex; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif;">
+
+  <nav aria-label="Switchboard" style="width: 232px; flex: none; box-sizing: border-box; padding: 28px 16px; background: #2A1E12; color: #F6EFE4; display: flex; flex-direction: column; gap: 6px;">
+    <span style="padding: 0 8px 18px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 28px; line-height: 0.95; letter-spacing: 0.03em;">THE<br>SWITCHBOARD</span>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="8">
+      <sc-if value="{{n.active}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" aria-current="page" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; background: #F6EFE4; color: #2A1E12; text-decoration: none; font-size: 15px; font-weight: 600;"><span>{{n.label}}</span><span>{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.idle}}" hint-placeholder-val="{{true}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="color: #E8D9C2;">{{n.count}}</span></a>
+      </sc-if>
+      <sc-if value="{{n.hot}}" hint-placeholder-val="{{false}}">
+        <a href="{{n.href}}" style="height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; color: #F6EFE4; text-decoration: none; font-size: 15px;"><span>{{n.label}}</span><span style="padding: 2px 8px; border-radius: 10px; background: #A3402A; color: #F6EFE4; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 800; font-size: 13px; letter-spacing: 0.08em;">{{n.count}}</span></a>
+      </sc-if>
+    </sc-for>
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #5A3814; display: flex; flex-direction: column; gap: 4px;">
+      <span id="line-state" style="padding: 0 8px 6px; font-size: 13px; color: #E8D9C2;">The line is</span>
+      <div role="radiogroup" aria-labelledby="line-state" style="display: flex; flex-direction: column; gap: 4px;">
+        <sc-for list="{{states}}" as="s" hint-placeholder-count="3">
+          <sc-if value="{{s.on}}" hint-placeholder-val="{{false}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-size: 14px; font-weight: 600;"><input type="radio" name="line-state" checked style="width: 16px; height: 16px; margin: 0; accent-color: #2A1E12;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+          <sc-if value="{{s.off}}" hint-placeholder-val="{{true}}">
+            <label style="display: flex; gap: 10px; align-items: center; min-height: 40px; padding: 0 10px; border-radius: 4px; color: #F6EFE4; font-size: 14px;"><input type="radio" name="line-state" style="width: 16px; height: 16px; margin: 0; accent-color: #F6EFE4;"><span style="width: 8px; height: 8px; border-radius: 4px; flex: none; background: {{s.dot}};"></span>{{s.label}}</label>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </nav>
+
+  <section aria-label="Queue" style="width: 296px; flex: none; box-sizing: border-box; border-right: 1.5px solid #2A1E12; padding: 28px 0 20px; display: flex; flex-direction: column; gap: 6px;">
+    <div style="padding: 0 20px 10px; display: flex; flex-direction: column; gap: 4px;">
+      <h1 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 40px; line-height: 0.9;">QUEUE · 23</h1>
+      <span style="font-size: 13px; color: #5A3814;">6 expire within 5 days · 3 on hold</span>
+    </div>
+    <p style="margin: 0; padding: 0 20px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 15px; letter-spacing: 0.12em; color: #A3402A;">FLAGGED FIRST</p>
+    <sc-for list="{{flagged}}" as="n" hint-placeholder-count="2">
+      <a href="AFlagged.dc.html" style="display: flex; flex-direction: column; gap: 6px; padding: 12px 20px; color: #2A1E12; text-decoration: none; border-left: 4px solid #A3402A;">
+        <span style="display: flex; justify-content: space-between; font-size: 14px;"><strong style="font-weight: 600;">{{n.flag}}</strong><span>{{n.lang}} · {{n.dur}}</span></span>
+        <span style="font-size: 13px; color: #5A3814;">{{n.mode}} · {{n.received}}</span>
+        <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #5A3814;"><span style="flex: 1 1 auto; height: 2px; background: #E8D9C2; position: relative;"><span style="position: absolute; left: 0; top: 0; height: 2px; background: #2A1E12; width: {{n.life}};"></span></span>{{n.left}}</span>
+      </a>
+    </sc-for>
+
+    <p style="margin: 14px 0 0; padding: 0 20px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 15px; letter-spacing: 0.12em;">WAITING</p>
+    <sc-for list="{{waiting}}" as="n" hint-placeholder-count="4">
+      <sc-if value="{{n.sel}}" hint-placeholder-val="{{false}}">
+        <a href="#note" aria-current="true" style="display: flex; flex-direction: column; gap: 6px; padding: 12px 20px; color: #F6EFE4; text-decoration: none; border-left: 4px solid #2A1E12; background: #2A1E12;">
+          <span style="display: flex; justify-content: space-between; font-size: 14px;"><strong style="font-weight: 600;">{{n.flag}}</strong><span>{{n.lang}} · {{n.dur}}</span></span>
+          <span style="font-size: 13px; color: #E8D9C2;">{{n.mode}} · {{n.received}}</span>
+          <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #E8D9C2;"><span style="flex: 1 1 auto; height: 2px; background: #5A3814; position: relative;"><span style="position: absolute; left: 0; top: 0; height: 2px; background: #F6EFE4; width: {{n.life}};"></span></span>{{n.left}}</span>
+        </a>
+      </sc-if>
+      <sc-if value="{{n.unsel}}" hint-placeholder-val="{{true}}">
+        <a href="#note" style="display: flex; flex-direction: column; gap: 6px; padding: 12px 20px; color: #2A1E12; text-decoration: none; border-left: 4px solid transparent;">
+          <span style="display: flex; justify-content: space-between; font-size: 14px;"><strong style="font-weight: 600;">{{n.flag}}</strong><span>{{n.lang}} · {{n.dur}}</span></span>
+          <span style="font-size: 13px; color: #5A3814;">{{n.mode}} · {{n.received}}</span>
+          <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #5A3814;"><span style="flex: 1 1 auto; height: 2px; background: #E8D9C2; position: relative;"><span style="position: absolute; left: 0; top: 0; height: 2px; background: #2A1E12; width: {{n.life}};"></span></span>{{n.left}}</span>
+        </a>
+      </sc-if>
+    </sc-for>
+    <p style="margin: auto 20px 0; font-family: 'Caveat Brush', cursive; font-size: 18px; line-height: 1.15; color: #5A3814;">each line is a note's 30 days. when it runs out, the note is deleted.</p>
+  </section>
+
+  <main style="flex: 1 1 auto; min-width: 0; box-sizing: border-box; padding: 28px 28px 28px; display: flex; flex-direction: column; gap: 18px;">
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <h2 style="margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 40px; line-height: 0.95;">THU 15 OCT, 23:12</h2>
+      <span style="font-size: 14px; color: #5A3814;">French · 0:33 · Say what's on your mind · free note, no prompt</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button type="button" aria-label="Play" style="width: 52px; height: 52px; flex: none; border-radius: 26px; border: none; background: #2A1E12; display: flex; align-items: center; justify-content: center;">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 16 16"><path d="M4.5 2.5v11l9-5.5z" fill="#F6EFE4"></path></svg>
+      </button>
+      <div style="flex: 1 1 auto; min-width: 0; position: relative;">
+        <svg aria-hidden="true" viewBox="0 0 800 110" preserveAspectRatio="none" style="display: block; width: 100%; height: 100px;">
+          <rect x="96" y="6" width="34" height="98" fill="#E8D9C2"></rect>
+          <rect x="96" y="6" width="34" height="98" fill="none" stroke="#5A3814" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"></rect>
+          <path d="{{wave}}" fill="none" stroke="#2A1E12" stroke-width="1.75" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+        </svg>
+        <span style="position: absolute; left: 12%; top: -18px; font-family: 'Caveat Brush', cursive; font-size: 16px; color: #5A3814;">cut?</span>
+      </div>
+    </div>
+
+    <section aria-labelledby="tr" style="border: 1.5px solid #2A1E12; border-radius: 4px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;">
+        <h3 id="tr" style="margin: 0; font-size: 16px; font-weight: 600;">Transcript (French) · 2 cuts suggested</h3>
+        <button type="button" style="height: 40px; padding: 0 16px; border: none; border-radius: 20px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 14px;">Accept both cuts</button>
+      </div>
+      <p style="margin: 0; font-size: 18px; line-height: 1.65;">Ma sœur <mark style="background: #E8D9C2; color: #2A1E12; border-bottom: 2px dashed #5A3814; padding: 1px 4px;">Inès</mark> me disait que je prenais trop de place. Pendant des années, je m'excusais avant chaque phrase, même au boulot chez <mark style="background: #E8D9C2; color: #2A1E12; border-bottom: 2px dashed #5A3814; padding: 1px 4px;">Decathlon Lille</mark>. Cette année, j'ai arrêté. Si tu fais pareil : tu as le droit d'être là.</p>
+      <p style="margin: 0; font-size: 13px; color: #5A3814;">Select any words to cut them. In own-voice notes, a cut becomes a soft tone in the audio.</p>
+    </section>
+
+    <section aria-labelledby="tl" style="display: flex; flex-direction: column; gap: 8px;">
+      <h3 id="tl" style="margin: 0; font-size: 16px; font-weight: 600;">English translation, from the redacted text</h3>
+      <label for="tlx" style="font-size: 13px; color: #5A3814;">Draft. Check it before approving: it will be labelled "Translated by Strnger".</label>
+      <textarea id="tlx" rows="4" style="width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1.5px solid #2A1E12; border-radius: 4px; background: #F6EFE4; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 16px; line-height: 1.5; resize: vertical;">My sister [name] used to say I took up too much room. For years I said sorry before every sentence, even at work at [workplace]. This year I stopped. If you're doing the same: you're allowed to be here.</textarea>
+    </section>
+  </main>
+
+  <aside aria-label="Decision" style="width: 340px; flex: none; box-sizing: border-box; border-left: 1.5px solid #2A1E12; padding: 28px 22px 28px; display: flex; flex-direction: column; gap: 18px; background: #EFE4D3;">
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; font-size: 14px;">
+      <span style="color: #5A3814;">Risk</span><strong style="font-weight: 600;">Low</strong>
+      <span style="color: #5A3814;">Sounds like a minor</span><strong style="font-weight: 600;">No</strong>
+      <span style="color: #5A3814;">Voice</span><strong style="font-weight: 600;">Own voice</strong>
+      <span style="color: #5A3814;">Timing</span><strong style="font-weight: 600;">Once reviewed</strong>
+    </div>
+
+    <fieldset style="margin: 0; padding: 0; border: none; display: flex; flex-direction: column; gap: 8px;">
+      <legend style="padding: 0; margin-bottom: 8px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.08em;">THEMES · PICK 1–2</legend>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <sc-for list="{{themes}}" as="t" hint-placeholder-count="9">
+          <sc-if value="{{t.on}}" hint-placeholder-val="{{false}}">
+            <button type="button" aria-pressed="true" style="height: 32px; padding: 0 11px; border: 1.5px solid #2A1E12; border-radius: 16px; background: #2A1E12; color: #F6EFE4; font-family: 'Source Serif 4', Georgia, serif; font-size: 13px;">{{t.name}}</button>
+          </sc-if>
+          <sc-if value="{{t.off}}" hint-placeholder-val="{{true}}">
+            <button type="button" aria-pressed="false" style="height: 32px; padding: 0 11px; border: 1.5px solid #2A1E12; border-radius: 16px; background: transparent; color: #2A1E12; font-family: 'Source Serif 4', Georgia, serif; font-size: 13px;">{{t.name}}</button>
+          </sc-if>
+        </sc-for>
+      </div>
+      <span style="font-family: 'Caveat Brush', cursive; font-size: 17px; color: #5A3814;">suggested: finding myself, regret &amp; forgiveness</span>
+    </fieldset>
+
+    <fieldset style="margin: 0; padding: 0; border: none; display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+      <legend style="padding: 0; margin-bottom: 8px; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 18px; letter-spacing: 0.08em;">WHERE IT GOES</legend>
+      <label style="display: flex; gap: 10px; align-items: center; min-height: 30px;"><input type="checkbox" checked style="width: 18px; height: 18px; margin: 0; accent-color: #2A1E12;">Social posts</label>
+      <label style="display: flex; gap: 10px; align-items: center; min-height: 30px;"><input type="checkbox" checked style="width: 18px; height: 18px; margin: 0; accent-color: #2A1E12;">Newsletter</label>
+      <label style="display: flex; gap: 10px; align-items: center; min-height: 30px;"><input type="checkbox" checked style="width: 18px; height: 18px; margin: 0; accent-color: #2A1E12;">Library</label>
+      <div style="margin-left: 28px; display: flex; flex-direction: column; gap: 6px; padding-left: 12px; border-left: 1.5px solid #2A1E12;">
+        <label style="display: flex; gap: 8px; align-items: center;"><input type="checkbox" checked style="width: 16px; height: 16px; margin: 0; accent-color: #2A1E12;">No self-harm or suicide</label>
+        <label style="display: flex; gap: 8px; align-items: center;"><input type="checkbox" checked style="width: 16px; height: 16px; margin: 0; accent-color: #2A1E12;">No medical advice</label>
+        <label style="display: flex; gap: 8px; align-items: center;"><input type="checkbox" style="width: 16px; height: 16px; margin: 0; accent-color: #2A1E12;">Needs a content note</label>
+      </div>
+    </fieldset>
+
+    <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.35;"><input type="checkbox" style="width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: #2A1E12;"><span><strong style="font-weight: 600;">Hold for 3 days.</strong> For notes that sound raw. The sender isn't told.</span></label>
+
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: auto;">
+      <button type="button" style="height: 52px; border: none; border-radius: 4px; background: #2A1E12; color: #F6EFE4; font-family: 'Archivo', sans-serif; font-stretch: 62%; font-weight: 900; font-size: 20px; letter-spacing: 0.06em;">APPROVE</button>
+      <span style="font-size: 12.5px; color: #5A3814;">Goes live in the library now, and to "Approved, not placed" on the schedule.</span>
+      <button type="button" style="height: 48px; border: 1.5px solid #A3402A; border-radius: 4px; background: transparent; color: #A3402A; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px; font-weight: 600;">Don't publish</button>
+      <span style="font-size: 12.5px; color: #5A3814;">Deletes the audio and transcript now. It can't be undone.</span>
+    </div>
+  </aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var cur = 'Queue', line = 'open';
+    var items = [['Overview', '', 'AOverview.dc.html'], ['Queue', '23', 'Switchboard.dc.html'], ['Flagged', '2', 'AFlagged.dc.html'], ['Scheduled', '', 'AScheduled.dc.html'], ['Published', '', 'APublished.dc.html'], ['Deletions', '1', 'ADeletions.dc.html'], ['Traffic', '', 'ASurge.dc.html'], ['Prompts & settings', '', 'APrompts.dc.html']];
+    var nav = items.map(function (it) { var hot = it[3] === true; return { label: it[0], count: it[1], href: it[2], active: it[0] === cur, idle: it[0] !== cur && !hot, hot: it[0] !== cur && hot }; });
+    var states = [['open', 'Open', '#9DC08B'], ['busy', 'Open · busy notice', '#E0A458'], ['paused', 'Paused', '#C9B79C']].map(function (s) { return { label: s[1], dot: s[2], on: s[0] === line, off: s[0] !== line }; });
+    var row = function (flag, lang, dur, mode, received, days, sel) {
+      return { flag: flag, lang: lang, dur: dur, mode: mode, received: received, left: days + 'd left', life: Math.round(days / 30 * 100) + '%', sel: !!sel, unsel: !sel };
+    };
+    var flagged = [
+      row('Risk: high', 'EN', '0:58', 'On my mind', 'today 02:41', 30),
+      row('Sounds like a minor?', 'FR', '0:21', 'For a stranger', 'yesterday', 29)
+    ];
+    var waiting = [
+      row('Free note', 'FR', '0:33', 'On my mind', 'Thu 23:12', 29, true),
+      row('This week’s prompt', 'EN', '0:47', 'On my mind', 'Thu 18:05', 29),
+      row('For a stranger', 'EN', '0:40', 'For a stranger', 'Mon 09:30', 26),
+      row('This week’s prompt', 'EN', '1:00', 'On my mind', '21 Sep', 3)
+    ];
+    var names = ['Love', 'Family', 'Loneliness & belonging', 'Loss & grief', 'Work & purpose', 'Finding myself', 'The in-between', 'Regret & forgiveness', 'Hope'];
+    var themes = names.map(function (n) { var on = n === 'Finding myself'; return { name: n, on: on, off: !on }; });
+    var pts = [];
+    for (var x = 0; x <= 800; x += 4) {
+      var i = x / 4;
+      var env = 0.15 + 0.85 * Math.abs(Math.sin(i * 0.06 + 0.3)) * (0.6 + 0.4 * Math.abs(Math.sin(i * 0.021 + 1)));
+      var y = 55 + 46 * env * (Math.sin(i * 1.63) * 0.6 + Math.sin(i * 0.49 + 0.7) * 0.4);
+      if (x < 8 || x > 790) y = 55;
+      pts.push((x === 0 ? 'M' : 'L') + x + ' ' + y.toFixed(1));
+    }
+    return { nav: nav, states: states, flagged: flagged, waiting: waiting, themes: themes, wave: pts.join(' ') };
+  }
+}
+</script>
+</body>
+</html>
