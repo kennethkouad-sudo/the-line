@@ -82,6 +82,8 @@ npm run format:check   # Prettier (npm run format to fix)
 
 First time on a new machine: `npx playwright install chromium`.
 
+GitHub Actions (`.github/workflows/ci.yml`) runs lint, type check, unit tests and browser tests on every pull request. Keep it green.
+
 ### In a Claude Code cloud session
 
 - Chromium is already installed, so don't run `playwright install`. Point Playwright at it:

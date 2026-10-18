@@ -7,8 +7,7 @@
     "title": "THE LINE"
   },
   "language": {
-    "groupLabel": "Language",
-    "groupLabel__TODO": "TODO(copy) screen-reader label for the EN/FR toggle, not in the spec or designs"
+    "groupLabel": "Language"
   },
   "gate": {
     "tagline": "Leave your voice for a stranger. Up to sixty seconds. No name.",

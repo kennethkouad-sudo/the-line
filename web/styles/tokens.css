@@ -1,6 +1,7 @@
 /* Design tokens, spec 9.1. */
 :root {
   --ink: #2a1e12;
+  --ink-50: rgb(42 30 18 / 0.5); /* ink at 50% opacity: the locked "Pick up the line" text */
   --brown: #5a3814;
   --cream: #f6efe4;
   --soft-cream: #e8d9c2;

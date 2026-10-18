@@ -7,8 +7,7 @@
     "title": "THE LINE"
   },
   "language": {
-    "groupLabel": "Langue",
-    "groupLabel__TODO": "TODO(copy-fr) draft, Kenneth to check"
+    "groupLabel": "Langue"
   },
   "gate": {
     "tagline": "Laisse ta voix à un inconnu. Jusqu'à soixante secondes. Sans nom.",
@@ -17,7 +16,6 @@
     "adultCheckbox": "J'ai 18 ans ou plus.",
     "pickUp": "DÉCROCHE LA LIGNE",
     "desktopHint": "Ça marche mieux dans Chrome ou Safari. Ton micro ne sert que pendant que tu enregistres.",
-    "desktopHint__TODO": "TODO(copy-fr) draft, Kenneth to check",
     "privacyLink": "Confidentialité",
     "listenLink": "Écouter des inconnus"
   },

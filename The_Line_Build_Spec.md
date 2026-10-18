@@ -447,6 +447,12 @@ Rulings made after Version 1. Where an entry differs from an earlier section or 
 - **A07:** the rate-limit rule is labelled "3 notes a day per connection". The limit stays IP-based (section 7).
 - **Alyssa** (named on A03) is the mental-health board lead. Her name is plain text on that screen.
 
+**18 October 2026 (M0 review)**
+
+- **Locked "Pick up the line":** cream background, 2 px ink border, ink text at 50% opacity. Unlocked: solid ink with cream text, as in the design. It stays a real disabled button.
+- **Approved copy:** the EN/FR toggle's screen-reader label is "Language" / "Langue". The desktop hint in French is "Ça marche mieux dans Chrome ou Safari. Ton micro ne sert que pendant que tu enregistres."
+- **CI:** GitHub Actions runs lint, type check, unit tests and browser tests on every pull request.
+
 ## 18. Launch checklist (not code; tracked here)
 
 - [ ] Classifier decided: Mistral with a DPA in place (free plan only with Mistral's written confirmation), or `CLASSIFIER_MODE=keywords` until then

@@ -21,6 +21,48 @@ test.describe("screen 01, the gate", () => {
     await expect(pickUp).toBeDisabled();
   });
 
+  test("locked and unlocked looks (decisions log)", async ({ page }) => {
+    await gotoReady(page, "/leave");
+    const pickUp = page.getByRole("button", { name: "PICK UP THE LINE" });
+    const ink = "rgb(42, 30, 18)";
+    const cream = "rgb(246, 239, 228)";
+
+    // Locked: cream background, 2 px ink border, ink text at 50% opacity.
+    await expect(pickUp).toHaveCSS("background-color", cream);
+    await expect(pickUp).toHaveCSS("border-top-width", "2px");
+    await expect(pickUp).toHaveCSS("border-top-color", ink);
+    await expect(pickUp).toHaveCSS("color", "rgba(42, 30, 18, 0.5)");
+    await expect(pickUp).toHaveCSS("opacity", "1");
+
+    // Unlocked: solid ink with cream text, as in the design.
+    await page.getByLabel("I'm 18 or older.").check();
+    await expect(pickUp).toHaveCSS("background-color", ink);
+    await expect(pickUp).toHaveCSS("color", cream);
+  });
+
+  test("desktop sizes and positions match DGate", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop", "DGate is the 1440 px design");
+    await gotoReady(page, "/leave");
+
+    // [font size, left, top, width, height] measured from design/DGate.dc.html at 1440×900.
+    const expected: [string, import("@playwright/test").Locator, string, number[]][] = [
+      ["title", page.getByRole("heading", { level: 1 }), "330px", [50, 88, -1, 264]],
+      ["tagline", page.getByText("Leave your voice for a stranger."), "30px", [64, 400, 560, -1]],
+      ["helpline", page.getByText("This line isn't monitored live."), "18px", [64, 610, 560, 25]],
+      ["checkbox label", page.locator("label", { hasText: "I'm 18 or older." }), "19px", [860, 610, 516, 44]],
+      ["button", page.getByRole("button", { name: "PICK UP THE LINE" }), "32px", [860, 672, 516, 72]],
+      ["hint", page.getByText("Works best in Chrome or Safari."), "14px", [860, 762, 516, -1]],
+    ];
+    for (const [name, locator, fontSize, [left, top, width, height]] of expected) {
+      await expect(locator, name).toHaveCSS("font-size", fontSize);
+      const box = (await locator.boundingBox())!;
+      expect(Math.round(box.x), `${name} left`).toBe(left);
+      expect(Math.round(box.y), `${name} top`).toBe(top);
+      if (width >= 0) expect(Math.round(box.width), `${name} width`).toBe(width);
+      if (height >= 0) expect(Math.round(box.height), `${name} height`).toBe(height);
+    }
+  });
+
   test("shows every approved English string", async ({ page }) => {
     await gotoReady(page, "/leave");
     const text = await page.locator("body").innerText();
