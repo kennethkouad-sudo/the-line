@@ -399,7 +399,55 @@ On a surge: the Traffic badge, plus an email to Kenneth with counts only.
 | M6 | A08, A11, source tags, surge, retention jobs, backups, hardening | E2E 8 passes; the launch checklist is complete |
 | v1.1 | Library 06–08 and D06–D08: theme pages, Encouragement tab, play all, play me one, plays counter, content notes, report | Opens once about 30 notes are approved |
 
-## 17. Launch checklist (not code; tracked here)
+## 17. Decisions log
+
+Rulings made after Version 1. Where an entry differs from an earlier section or a design file, the entry wins.
+
+**18 October 2026 (before M0)**
+
+**Screen 01 French copy (approved by Kenneth, use exactly):**
+
+| EN | FR |
+|---|---|
+| Leave your voice for a stranger. Up to sixty seconds. No name. | Laisse ta voix à un inconnu. Jusqu'à soixante secondes. Sans nom. |
+| this week: what's the in-between you're in right now? | cette semaine : dans quel entre-deux es-tu en ce moment ? |
+| the line is open | la ligne est ouverte |
+| This line isn't monitored live. | Cette ligne n'est pas surveillée en direct. |
+| Struggling right now? Find a helpline in your country. | Ça ne va pas en ce moment ? Trouve une ligne d'écoute dans ton pays. |
+| In immediate danger? Call 112 (EU) or your local emergency number. | En danger immédiat ? Appelle le 112 (UE) ou le numéro d'urgence de ton pays. |
+| I'm 18 or older. | J'ai 18 ans ou plus. |
+| PICK UP THE LINE | DÉCROCHE LA LIGNE |
+| Privacy notice | Confidentialité |
+| Listen to strangers | Écouter des inconnus |
+
+**French for later screens:** Claude Code drafts it with *tu* and marks each string `TODO(copy-fr)`. Kenneth checks them.
+
+**Wording:** "No name." on the gate is allowed. It is true and doesn't say "anonymous".
+
+**M0 build decisions:**
+- "Pick up the line" unlocks when the 18+ box is ticked and does nothing yet in M0; it is wired to screen 02 in M1.
+- Fonts are self-hosted from the OFL sources; the design files' Google Fonts links are not used.
+- The line sits at exactly 500 px from the top on phone and 540 px on desktop (what every design file uses).
+- Desktop layout from 1024 px wide; phone layout below. Short phones scroll; the line keeps its height.
+- Screen 01's "dial tone" is static, as drawn (a line with a dot and "the line is open"). No animation, no sound.
+- The line is one shared component with variants. Each variant is built in the milestone that adds its screen; M0 builds the dial (01).
+- The desktop gate's "Listen to strangers" link is hidden until v1.1.
+- `/privacy` is a placeholder page marked `TODO(legal)` until the notice is written.
+- "Pick up the line" is a real `<button>` on phone and desktop (the desktop design used a link, which can't be disabled).
+- The line-state label on 01 is fixed at "open" until line state exists (M3).
+- Docker Compose is written in M0 (web + Postgres); it is only run if Docker is available in the session.
+
+**Design contradictions (the spec wins in every case):**
+- **Consent text 2:** use the spec's version (`2026-10-a`, section 9.5), not the shorter wording in `Share`/`DShare`.
+- **Surge vs line state:** a surge only raises an alert (badge and email). The line state changes only when Kenneth sets it. `ASurge`'s "turned on by itself" refers to the alert only.
+- **A03 Flagged:** the headline is "CHECK THIS FLAG", with the sub-line "If it's a real risk, it's deleted. If not, it goes back to the queue." (replaces "THIS NOTE WON'T BE PUBLISHED.").
+- **A01 Approve:** the text under Approve in v1 is "Goes live on its playback page, and to 'Approved, not placed' on the schedule." The library is mentioned only from v1.1.
+- **Report (09):** opens a small form with a reason (worrying content / identifies someone / something else) and optional text. No reporter data is stored. Reports are rate-limited per HMAC'd IP, like uploads. One report puts the note at the top of Flagged, tagged "Reported", while it stays live. Three reports hide it automatically until Kenneth decides.
+- **Private link (05):** the layout fits a 22+ character token, in monospace, on two lines on phone if needed.
+- **A07:** the rate-limit rule is labelled "3 notes a day per connection". The limit stays IP-based (section 7).
+- **Alyssa** (named on A03) is the mental-health board lead. Her name is plain text on that screen.
+
+## 18. Launch checklist (not code; tracked here)
 
 - [ ] Classifier decided: Mistral with a DPA in place (free plan only with Mistral's written confirmation), or `CLASSIFIER_MODE=keywords` until then
 - [ ] DPIA approved by the board and signed, describing the classifier set-up actually running
