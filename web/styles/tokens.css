@@ -1,0 +1,48 @@
+/* Design tokens, spec 9.1. */
+:root {
+  --ink: #2a1e12;
+  --brown: #5a3814;
+  --cream: #f6efe4;
+  --soft-cream: #e8d9c2;
+  --panel: #efe4d3;
+  --alert-red: #a3402a; /* admin only */
+
+  --font-display: "Archivo", "Arial Narrow", sans-serif;
+  --font-body: "Source Serif 4", Georgia, serif;
+  --font-hand: "Caveat Brush", cursive;
+  --display-stretch: 62%;
+
+  /* The line: centre 500 px from the top on phone, 540 px on desktop (decisions log). */
+  --line-y: 500px;
+  --line-stroke: 2px;
+
+  --target-min: 44px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --line-y: 540px;
+  }
+}
+
+/* Put this on the block right above <Line>, so the line lands at --line-y. */
+.above-the-line {
+  box-sizing: border-box;
+  min-height: calc(var(--line-y) - var(--line-stroke) / 2);
+}
+
+/* Display type: Archivo, width 62, weight 800–900, uppercase. */
+.display {
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* Handwritten: Caveat Brush, brown, slightly rotated. */
+.handwritten {
+  font-family: var(--font-hand);
+  color: var(--brown);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}

@@ -1,0 +1,53 @@
+/*
+ * The line's centre sits at var(--line-y) from the top of the page. Put it straight
+ * after a block with the .above-the-line class (styles/tokens.css) to get that height.
+ */
+.line {
+  position: relative;
+  width: 100%;
+  height: var(--line-stroke);
+}
+
+.stroke {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+}
+
+/* Dial tone (01): a dot near the right end, as drawn in Main and DGate. */
+.dot {
+  position: absolute;
+  top: 50%;
+  right: 23px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--brown);
+  transform: translateY(-50%);
+}
+
+.status {
+  position: absolute;
+  top: 7px;
+  right: 22px;
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: 17px;
+  line-height: 1.2;
+  color: var(--brown);
+  white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+  .dot {
+    right: 58px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .status {
+    top: 13px;
+    right: 52px;
+    font-size: 22px;
+  }
+}

@@ -1,0 +1,23 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.block p {
+  margin: 0;
+}
+
+.notMonitored {
+  font-weight: 600;
+}
+
+@media (min-width: 1024px) {
+  .block {
+    gap: 10px;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+}

@@ -1,0 +1,198 @@
+/* Screen 01, from design/Main.dc.html (phone) and design/DGate.dc.html (desktop). */
+.page {
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.top,
+.bottom {
+  padding: 0 28px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  height: var(--target-min);
+  padding-top: 18px;
+}
+
+.wordmark {
+  margin-right: auto;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+}
+
+.listen {
+  font-size: 16px;
+}
+
+.title {
+  margin: 22px 0 0 -4px;
+  font-size: min(148px, 37.9vw);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+}
+
+.title span {
+  display: block;
+}
+
+.tagline {
+  margin: 11px 12px 0 0;
+  font-size: 21px;
+  line-height: 1.3;
+  font-style: italic;
+}
+
+.prompt {
+  margin: 25px 0 0;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.helpline {
+  margin-top: 40px;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.adult {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: var(--target-min);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.adult input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--ink);
+}
+
+.pickUp {
+  height: 58px;
+  border: none;
+  border-radius: 4px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.pickUp:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.hint {
+  display: none;
+}
+
+.privacy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--target-min);
+  margin-top: 0;
+  padding-bottom: 8px;
+  font-size: 13px;
+}
+
+@media (min-width: 1024px) {
+  .top,
+  .bottom {
+    padding: 0 64px;
+  }
+
+  .header {
+    padding-top: 22px;
+  }
+
+  .wordmark {
+    font-size: 18px;
+    letter-spacing: 0.16em;
+  }
+
+  .title {
+    margin: 22px 0 0 -14px;
+    font-size: min(330px, 22.9vw);
+    line-height: 0.8;
+    white-space: nowrap;
+  }
+
+  .title span {
+    display: inline;
+  }
+
+  /* Two columns: 560 px of text, then the right column starting 860 px in (at 1440 px). */
+  .intro,
+  .bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 560fr) minmax(0, 236fr) minmax(0, 516fr);
+    align-items: start;
+  }
+
+  .intro > :last-child,
+  .bottom > .action {
+    grid-column: 3;
+  }
+
+  .tagline {
+    margin: 48px 0 0;
+    font-size: 30px;
+    line-height: 1.25;
+  }
+
+  .prompt {
+    margin: 52px 16px 0 0;
+    font-size: 36px;
+    line-height: 1.05;
+  }
+
+  .helpline,
+  .action {
+    margin-top: 69px;
+  }
+
+  .action {
+    gap: 18px;
+  }
+
+  .adult {
+    gap: 14px;
+    font-size: 19px;
+  }
+
+  .adult input {
+    width: 24px;
+    height: 24px;
+  }
+
+  .pickUp {
+    height: 72px;
+    font-size: 32px;
+  }
+
+  .hint {
+    display: block;
+    margin: 0;
+    font-size: 14px;
+    color: var(--brown);
+  }
+
+  .privacy {
+    display: none;
+  }
+}
