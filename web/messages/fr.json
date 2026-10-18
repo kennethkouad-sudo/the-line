@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "title": "The Line"
+  },
+  "brand": {
+    "wordmark": "STRNGER",
+    "title": "THE LINE"
+  },
+  "language": {
+    "groupLabel": "Langue"
+  },
+  "gate": {
+    "tagline": "Laisse ta voix à un inconnu. Jusqu'à soixante secondes. Sans nom.",
+    "promptOfWeek": "cette semaine : {prompt}",
+    "lineOpen": "la ligne est ouverte",
+    "adultCheckbox": "J'ai 18 ans ou plus.",
+    "pickUp": "DÉCROCHE LA LIGNE",
+    "desktopHint": "Ça marche mieux dans Chrome ou Safari. Ton micro ne sert que pendant que tu enregistres.",
+    "privacyLink": "Confidentialité",
+    "listenLink": "Écouter des inconnus"
+  },
+  "prompt": {
+    "current": "dans quel entre-deux es-tu en ce moment ?",
+    "current__TODO": "TODO(M3) comes from the prompts table once it exists"
+  },
+  "helpline": {
+    "notMonitored": "Cette ligne n'est pas surveillée en direct.",
+    "struggling": "Ça ne va pas en ce moment ? <link>Trouve une ligne d'écoute dans ton pays</link>.",
+    "danger": "En danger immédiat ? Appelle le <strong>112</strong> (UE) ou le numéro d'urgence de ton pays."
+  },
+  "privacy": {
+    "title": "Confidentialité",
+    "body": "TODO(legal-fr) La politique de confidentialité sera ici.",
+    "body__TODO": "TODO(legal-fr) placeholder until the notice is written and checked"
+  }
+}

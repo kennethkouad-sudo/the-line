@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "title": "The Line"
+  },
+  "brand": {
+    "wordmark": "STRNGER",
+    "title": "THE LINE"
+  },
+  "language": {
+    "groupLabel": "Language"
+  },
+  "gate": {
+    "tagline": "Leave your voice for a stranger. Up to sixty seconds. No name.",
+    "promptOfWeek": "this week: {prompt}",
+    "lineOpen": "the line is open",
+    "adultCheckbox": "I'm 18 or older.",
+    "pickUp": "PICK UP THE LINE",
+    "desktopHint": "Works best in Chrome or Safari. Your microphone is only used while you record.",
+    "privacyLink": "Privacy notice",
+    "listenLink": "Listen to strangers"
+  },
+  "prompt": {
+    "current": "what's the in-between you're in right now?",
+    "current__TODO": "TODO(M3) comes from the prompts table once it exists"
+  },
+  "helpline": {
+    "notMonitored": "This line isn't monitored live.",
+    "struggling": "Struggling right now? <link>Find a helpline in your country</link>.",
+    "danger": "In immediate danger? Call <strong>112</strong> (EU) or your local emergency number."
+  },
+  "privacy": {
+    "title": "Privacy notice",
+    "body": "TODO(legal) The privacy notice will go here.",
+    "body__TODO": "TODO(legal) placeholder until the notice is written and checked"
+  }
+}

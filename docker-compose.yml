@@ -1,0 +1,26 @@
+# M0: the web app, plus the database it will use from M1.
+# The audio worker (Python) joins in M2, Caddy for TLS at the first deploy (M1).
+services:
+  web:
+    build: ./web
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - db
+
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: the_line
+      POSTGRES_USER: the_line
+      # Local development only. Real secrets live in the server's environment (spec 14).
+      POSTGRES_PASSWORD: local-dev-only
+    volumes:
+      - db-data:/var/lib/postgresql
+    ports:
+      - "127.0.0.1:5432:5432"
+
+volumes:
+  db-data:

@@ -1,0 +1,25 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 28px 48px;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+}
+
+.title {
+  margin: 32px 0 24px;
+  font-size: 56px;
+  line-height: 0.9;
+}
+
+.helpline {
+  margin-top: 48px;
+}
