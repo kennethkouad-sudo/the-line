@@ -31,6 +31,7 @@ The Line is a web voice recorder: anyone 18+ leaves a voice note of up to 60 sec
 
 ```
 CLAUDE.md, PROGRESS.md, The_Line_Build_Spec.md, design/
+Dockerfile                the app's image, built from web/ (at the top because Clever Cloud looks for it here)
 docker-compose.yml        web + Postgres (local use; staging and production run on Clever Cloud)
 web/                      the Next.js app (App Router, TypeScript)
   app/                    routes: / (redirect), /leave, /privacy, /d/[token], /api/notes, /api/health

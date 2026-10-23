@@ -3,7 +3,7 @@
 # The audio worker (Python) joins in M2.
 services:
   web:
-    build: ./web
+    build: .
     ports:
       - "3000:3000"
     environment:

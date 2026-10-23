@@ -1,15 +1,17 @@
 # The Line web app. Built with Next.js "standalone" output.
-# Runs the same on Clever Cloud (which sets PORT=8080) and on any Docker host (fallback).
+# It sits at the top of the repository because Clever Cloud looks for it here; the app
+# itself is in web/. Runs the same on Clever Cloud (which sets PORT=8080) and on any
+# Docker host (the fallback in section 3).
 FROM node:22-alpine AS deps
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY web/package.json web/package-lock.json ./
 RUN npm ci
 
 FROM node:22-alpine AS build
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY web/ ./
 RUN npx next build
 
 FROM node:22-alpine AS run

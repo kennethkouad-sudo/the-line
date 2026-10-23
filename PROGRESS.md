@@ -152,6 +152,7 @@ The full list is in the spec, section 17 (decisions log). In short:
 - **Security headers** on every page, including the microphone allowed only for our own site. On `/d/…`: no referrer, no caching, no indexing.
 - **The weekly question** has a row in a new `prompts` table, so notes can point to it. Its text still comes from the message files until M3.
 - **The staging bar** uses the alert red, so it can't be mistaken for part of the design.
+- **The `Dockerfile` is at the top of the repository** (it builds the app from `web/`): Clever Cloud's Docker apps only look for it there, and ignore `APP_FOLDER`.
 
 **Smaller decisions made while building M0:**
 - **Next.js "Cache Components" is off.** Every page depends on the visitor's language, so plain server rendering is simpler and matches the spec.
