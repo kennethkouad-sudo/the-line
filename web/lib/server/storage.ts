@@ -68,7 +68,11 @@ export class S3Storage implements Storage {
       headers: body ? { "content-type": "application/octet-stream" } : undefined,
     });
     if (!response.ok && !(method === "DELETE" && response.status === 404)) {
-      throw new Error(`Storage ${method} failed: ${response.status}`);
+      // S3 explains failures with a short code (e.g. NoSuchBucket); log it, never the body or keys.
+      const code = /<Code>([A-Za-z]{1,64})<\/Code>/.exec(await response.text().catch(() => ""))?.[1];
+      throw new Error(
+        `Storage ${method} failed: ${response.status}${code ? ` ${code}` : ""} (${new URL(this.s3.endpoint).host})`,
+      );
     }
     return response;
   }

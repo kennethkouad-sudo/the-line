@@ -95,7 +95,8 @@ export function useRecorder(initial: Recording | null, onRecorded: (recording: R
     const recorder = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
     const chunks: Blob[] = [];
     recorder.addEventListener("dataavailable", (event) => event.data.size && chunks.push(event.data));
-    recorder.start(1000);
+    // One piece, not timed chunks: Safari's MP4 plays back more reliably that way.
+    recorder.start();
 
     const startedAt = performance.now();
     const session = {

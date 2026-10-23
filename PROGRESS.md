@@ -71,14 +71,18 @@ Milestones are in `The_Line_Build_Spec.md` section 16. How to run things is in `
 
 ## Next
 
-### M1: first deploy to staging (waiting on Kenneth's accounts)
+### M1: first deploy to staging (in progress)
 
-1. Clever Cloud account and the staging app, with its Postgres and Cellar add-ons (EU).
-2. Cloudflare account and a Turnstile widget for the staging address.
-3. The secret settings, typed into Clever Cloud's panel by Kenneth.
-4. Deploy, then a test note on staging from a real phone. Acceptance: staging is reachable.
-
-Check on staging: Cellar accepts our storage requests (path-style addresses), and the real Turnstile widget appears and passes.
+- **Done:**
+  - Clever Cloud app `the-line-staging` with its Postgres and Cellar add-ons, all in Paris.
+  - The Turnstile widget for the staging address.
+  - The secret settings, entered by Kenneth in Clever Cloud.
+  - The app deploys from the pull request's branch. **Staging is reachable** (password, noindex and staging bar all working).
+- **First phone test** (iPhone X, Safari), with the real Cloudflare check passing:
+  - **Saving the note failed.** Most likely the storage connection (Cellar). The app's log line now gives the storage's own error code, to find out exactly why.
+  - **Failed saves used up the 3-a-day allowance**, so Kenneth was told he'd left 3 notes. Fixed: a note that can't be saved no longer counts. Today's counts are cleared on the next deploy (migration 002).
+  - **Listening back** was unreliable at first in Safari. The recording is now made in one piece rather than one-second chunks, and playback retries once.
+- **Still to do:** fix the storage connection from the log line, then repeat the phone test up to the deletion. Acceptance: staging is reachable (done), and a test note goes all the way through.
 
 ### Then M2: the worker (normalise, transcribe, classify) and the queue.
 

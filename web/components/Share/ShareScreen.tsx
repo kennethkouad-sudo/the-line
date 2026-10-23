@@ -198,8 +198,12 @@ function ListenBack() {
   const toggle = () => {
     const element = audio.current;
     if (!element) return;
-    if (element.paused) element.play().catch(() => setPlaying(false));
-    else element.pause();
+    if (!element.paused) return element.pause();
+    // Safari sometimes refuses the first play of a fresh recording: load it, then try once more.
+    element.play().catch(() => {
+      element.load();
+      element.play().catch(() => setPlaying(false));
+    });
   };
 
   return (
@@ -216,7 +220,7 @@ function ListenBack() {
       <audio
         ref={audio}
         src={url}
-        preload="metadata"
+        preload="auto"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={() => setPlaying(false)}

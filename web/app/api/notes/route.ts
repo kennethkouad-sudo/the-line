@@ -1,7 +1,7 @@
 import { config } from "@/lib/server/config";
 import { db } from "@/lib/server/db";
 import { createNote } from "@/lib/server/notes";
-import { clientIp, NOTES_PER_DAY, rateLimitKey, takeRateLimit } from "@/lib/server/rateLimit";
+import { clientIp, giveBackRateLimit, NOTES_PER_DAY, rateLimitKey, takeRateLimit } from "@/lib/server/rateLimit";
 import { MAX_BYTES, parseSubmission, type SubmissionError } from "@/lib/server/submission";
 import { verifyTurnstile } from "@/lib/server/turnstile";
 
@@ -25,6 +25,7 @@ const fail = (error: SubmissionError) =>
  * every one has passed. The response carries the deletion token, once.
  */
 export async function POST(request: Request) {
+  let counted: string | null = null;
   try {
     const length = Number(request.headers.get("content-length"));
     if (length > MAX_BYTES + 64 * 1024) return fail("too_large");
@@ -43,6 +44,7 @@ export async function POST(request: Request) {
 
     const key = rateLimitKey(clientIp(request.headers), config.rateLimitSecret, new Date());
     if (!(await takeRateLimit(db(), key, "notes", NOTES_PER_DAY))) return fail("rate_limited");
+    counted = key;
 
     const { token } = await createNote(parsed.submission);
     const base = config.publicBaseUrl ?? new URL(request.url).origin;
@@ -53,6 +55,8 @@ export async function POST(request: Request) {
   } catch (error) {
     // Never log the request itself: it carries the recording.
     console.error("upload failed:", error instanceof Error ? error.message : "unknown error");
+    // The note wasn't saved, so it doesn't count towards the day's 3.
+    if (counted) await giveBackRateLimit(db(), counted, "notes").catch(() => {});
     return fail("server_error");
   }
 }

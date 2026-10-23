@@ -43,3 +43,11 @@ export async function takeRateLimit(
   );
   return result.rowCount === 1;
 }
+
+/** Undoes takeRateLimit when the note couldn't be saved after all. */
+export async function giveBackRateLimit(client: pg.Pool | pg.PoolClient, key: string, bucket: string) {
+  await client.query("UPDATE rate_limits SET count = count - 1 WHERE key = $1 AND bucket = $2 AND count > 0", [
+    key,
+    bucket,
+  ]);
+}
