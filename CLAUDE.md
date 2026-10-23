@@ -25,7 +25,7 @@ The Line is a web voice recorder: anyone 18+ leaves a voice note of up to 60 sec
 7. **Expiry is real.** A note with no decision 30 days after submission is deleted, and so are its audio and transcripts.
 8. **Wording.** The UI never says "anonymous" and never promises that every note is shared. Approved phrasing: "shared without your name" and "A person reviews every note before it's shared." / « Une personne vérifie chaque note avant qu'elle soit partagée. »
 9. **Help is always visible.** Every sender and public page shows the helpline block (section 9.3).
-10. **Real notes reach Mistral only under a signed DPA with training turned off** (section 8). If that isn't in place, the classifier runs in `CLASSIFIER_MODE=keywords` and sends nothing out.
+10. **Real notes reach Mistral only when all four conditions in section 8 are met** (training off, written confirmation that the DPA applies, zero data retention requested, EU endpoint only). Until a provider is confirmed, the classifier runs in `CLASSIFIER_MODE=keywords` and sends nothing out.
 
 ## Where things are
 

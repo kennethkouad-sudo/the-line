@@ -58,6 +58,8 @@ These join the spec's launch checklist (section 18).
 
 The full list is in the spec, section 17 (decisions log). In short:
 
+**Classifier (23 October, before M1):** provider-agnostic, built in M2. One interface, two adapters: Mistral's EU API (`api.eu.mistral.ai` only, no global fallback) or a self-hosted open-weights model, plus keywords-only mode. Mistral sees real notes only when all four conditions in spec section 8 are met. Until a provider is confirmed, `CLASSIFIER_MODE=keywords`.
+
 **Screen 01 French copy:** approved by Kenneth, used exactly. The table is in spec section 17, and a test checks the page against it.
 
 **French for later screens:** drafted with *tu*, each string marked `TODO(copy-fr)` for Kenneth to check.

@@ -36,7 +36,7 @@ Until v1.1, `line.histrnger.com/` redirects to `/leave`, keeping the query strin
 7. **Expiry is real.** A note with no decision 30 days after submission is deleted, and so are its audio and transcripts.
 8. **Wording.** The UI never says "anonymous" and never promises that every note is shared. Approved phrasing: "shared without your name" and "A person reviews every note before it's shared." / « Une personne vérifie chaque note avant qu'elle soit partagée. »
 9. **Help is always visible.** Every sender and public page shows the helpline block (section 9.3).
-10. **Real notes reach Mistral only under a signed DPA with training turned off** (section 8). If that isn't in place, the classifier runs in `CLASSIFIER_MODE=keywords` and sends nothing out.
+10. **Real notes reach Mistral only when all four conditions in section 8 are met** (training off, written confirmation that the DPA applies, zero data retention requested, EU endpoint only). Until a provider is confirmed, the classifier runs in `CLASSIFIER_MODE=keywords` and sends nothing out.
 
 ## 3. Stack and architecture
 
@@ -51,7 +51,7 @@ Until v1.1, `line.histrnger.com/` redirects to `/leave`, keeping the query strin
 | File storage | S3-compatible object storage in the EU | Audio and rendered assets |
 | Hosting | One EU VPS (e.g. Hetzner, Germany or Finland), Docker Compose, Caddy for TLS | Cheap, EU-only, CPU is enough |
 | Bot check | Cloudflare Turnstile | |
-| LLM | Mistral API (section 8) | EU company |
+| LLM | Provider-agnostic classifier (section 8): Mistral's EU API, or a self-hosted open-weights model, or keywords only | No lock-in; keywords mode needs no model |
 | Email | One transactional sender, alerts to Kenneth only (counts, never content) | |
 
 Use current stable versions. Self-host all fonts (Archivo variable with width axis, Source Serif 4, Caveat Brush; all OFL). **Don't load Google Fonts from Google's CDN**, because that sends visitors' IPs to Google.
@@ -62,7 +62,7 @@ browser ──upload──▶ Next.js API ──▶ object storage (raw, encrypt
                          └─▶ jobs table ──▶ Python worker
                                               ├─ normalise (ffmpeg)
                                               ├─ transcribe (faster-whisper, word timestamps)
-                                              └─ classify (Mistral) ──▶ review queue
+                                              └─ classify (keywords + adapter) ──▶ review queue
 Kenneth (switchboard) ──decide──▶ render jobs ──▶ public assets ──▶ /n/<id>, kits, library
 ```
 
@@ -171,16 +171,22 @@ any state ──sender uses /d/<token>──▶ deleted (+ takedown tasks for po
 
 ## 8. Classifier
 
-**Provider:** Mistral API, a small model, JSON output.
+**Provider-agnostic.** The classifier is one interface with two adapters, chosen by config. Built in M2.
 
-**Two modes, set by `CLASSIFIER_MODE`:**
-- `llm`: keyword lists plus Mistral, as described below.
-- `keywords`: keyword lists only. Nothing leaves the server, no cuts are suggested, and every note without a keyword hit gets `risk = medium` so nothing looks cleared by a model that didn't run. This mode must work fully on its own.
+**Modes and adapters, set by `CLASSIFIER_MODE` and `CLASSIFIER_PROVIDER`:**
+- `CLASSIFIER_MODE=keywords`: keyword lists only. No model is needed, nothing leaves the server, no cuts are suggested, and every note without a keyword hit gets `risk = medium` so nothing looks cleared by a model that didn't run. This mode must work fully on its own. **It is the default, and it stays on until a provider is confirmed.**
+- `CLASSIFIER_MODE=llm`: keyword lists plus one adapter, as described below:
+  - `CLASSIFIER_PROVIDER=mistral`: Mistral's EU API, a small model, JSON output. The endpoint is fixed in code to `https://api.eu.mistral.ai`. It is not configurable, and there is **no fallback to the global endpoint**: if the EU endpoint fails, the normal failure rule applies (`risk = high`).
+  - `CLASSIFIER_PROVIDER=selfhosted`: an open-weights model running on our own server (`SELFHOSTED_LLM_URL`, reachable only from our own network). Nothing leaves our infrastructure.
+- Both adapters take the same input, return the same schema, and follow the same failure rule. The rest of the pipeline doesn't know which one ran; `classifier_output` records the provider and model.
 
-**Plan rules:**
-- `MISTRAL_PLAN=experiment` (free) is for test notes, or for real notes only once Mistral has confirmed in writing that its DPA covers that plan, with "Anonymous improvement data" turned off.
-- `MISTRAL_PLAN=scale` (paid) with a signed DPA. Scale-plan data is not used for training.
-- The switchboard shows a red warning on A07 while `experiment` is set.
+**When Mistral may see real notes.** All four must be true:
+1. "Anonymous improvement data" is turned off in the Mistral account.
+2. Mistral has confirmed in writing that our API data isn't used for training and that its DPA applies to our account.
+3. Zero data retention has been requested from Mistral.
+4. The EU endpoint (`api.eu.mistral.ai`) is used.
+
+Mistral's API is business-only, so the account is a pay-as-you-go business account. (The earlier "Experiment" and "Scale" plan rules no longer apply.) Until all four are confirmed, test notes may use the Mistral adapter, and real notes run in `keywords` mode or on the self-hosted adapter. `MISTRAL_CONDITIONS_CONFIRMED=yes` is set by Kenneth only once all four are ticked on the launch checklist; while the Mistral adapter is selected without it, the switchboard shows a red warning on A07.
 
 **Input:** the raw transcript, language, mode. **Output, validated against a schema:**
 
@@ -201,7 +207,7 @@ any state ──sender uses /d/<token>──▶ deleted (+ takedown tasks for po
 - **The prompt tells the model to over-flag.** It covers self-harm, suicide, harm to others, abuse, and anything that sounds like someone under 18.
 - **On failure** (invalid JSON, a timeout over 20 s, an API error): retry once, then set `risk = high` with reason `classifier_failed`.
 - **Map `pii_spans` to word timestamps** by text match, to pre-fill the suggested cuts.
-- **Test set:** `fixtures/classifier/`, about 40 synthetic notes in EN and FR, labelled. CI runs it against a mock. A manual script runs it against the real API. Target: every risk fixture comes back `high`.
+- **Test set:** `fixtures/classifier/`, about 40 synthetic notes in EN and FR, labelled. CI runs it against a mock. A manual script runs it against each real adapter in use. Target: every risk fixture comes back `high`.
 
 ## 9. Sender experience (v1: screens 01–05 and 09, phone and desktop)
 
@@ -301,7 +307,7 @@ Use message files (`en.json`, `fr.json`). French uses *tu*. Detect the locale fr
 | A04 Scheduled | `AScheduled` | A week grid of channels × days. "Approved, not placed" cards are dragged onto a day. On drop, a popover asks for **Reel**, **Carousel slide** (add to an existing carousel for that theme, or start a new one) or **Story**. Notes still in their 3-day wait are dashed. Link to the newsletter kit |
 | A05 Published | `APublished` | "Today: post, then paste the link": a post URL field and Mark posted. A table of notes and their channels, plays and status. Filter: Missing a link |
 | A06 Deletions | `ADeletions` | Takedown tasks (open post, mark done) and the deletion log. No content |
-| A07 Prompts & settings | `APrompts` | Weekly prompts (EN and FR, warns when FR is missing), classifier status and plan warning, pause messages, rules and thresholds, keyword lists, invite a reviewer |
+| A07 Prompts & settings | `APrompts` | Weekly prompts (EN and FR, warns when FR is missing), classifier status (mode, provider, and the Mistral-conditions warning), pause messages, rules and thresholds, keyword lists, invite a reviewer |
 | A08 Traffic | `ASurge` | Notes per hour for 3 days, with markers. Breakdown by `source_tag`. The funnel (received, blocked by bot check/duplicate/too short, queued, flagged). Capacity: time to clear the queue when listening to everything vs read-first triage, against the 30-day limit. Busy-notice and pause controls. Invite a reviewer |
 | A09 Carousel builder | `ACarousel` | Cover slide (generated from the theme), note slides (reorderable, removable, add more approved notes from the same theme), end slide. Caption, bio tag link, Download slides (PNG 1080×1350), Copy caption |
 | A10 Newsletter kit | `ANewsletter` | A preview of the "A stranger said this" block at 600 px, then six paste steps, each with copy or download. After sending, paste the web URL and mark the issue sent |
@@ -360,11 +366,11 @@ On a surge: the Traffic badge, plus an email to Kenneth with counts only.
 ## 14. Security and privacy
 
 - Encrypt raw audio and transcripts with envelope encryption (a per-file data key wrapped by a master key from the environment). The bucket is private, and public assets go in a separate public bucket.
-- CSP with no third-party origins except Turnstile and the Mistral API (server-side only). HSTS.
+- CSP with no third-party origins except Turnstile. The Mistral EU API, if used, is called server-side only. HSTS.
 - Only strictly necessary cookies (language, admin session), so no cookie banner is needed.
 - No analytics. Counts come from our own database.
 - Admin actions are written to the audit log. Back up the database daily to EU storage, encrypted, kept for 7 days.
-- Secrets live in the environment only: `MISTRAL_API_KEY`, `MISTRAL_PLAN`, `TURNSTILE_SECRET`, `MASTER_KEY`, `TOKEN_SALT`, `RATE_LIMIT_SECRET`, `S3_*`, `SMTP_*`.
+- Secrets live in the environment only: `CLASSIFIER_MODE`, `CLASSIFIER_PROVIDER`, `MISTRAL_API_KEY`, `MISTRAL_CONDITIONS_CONFIRMED`, `SELFHOSTED_LLM_URL`, `TURNSTILE_SECRET`, `MASTER_KEY`, `TOKEN_SALT`, `RATE_LIMIT_SECRET`, `S3_*`, `SMTP_*`.
 
 ## 15. Tests
 
@@ -392,7 +398,7 @@ On a surge: the Traffic badge, plus an email to Kenneth with counts only.
 |---|---|---|
 | M0 | Repo, Docker Compose, fonts, design tokens, the line component, i18n scaffold, test setup. **No server yet: runs in the Claude Code session only** | Screen 01 runs locally in EN and FR; tests run |
 | M1 | Sender flow 01–05, upload API, Turnstile, rate limit, encrypted storage, deletion page, **first deploy to an EU staging server** | E2E 1–3 pass; staging is reachable |
-| M2 | Worker: normalise, transcribe, classify; the queue | Notes arrive in the queue with transcripts and flags; E2E 5 passes |
+| M2 | Worker: normalise, transcribe, classify (keywords mode, plus the Mistral and self-hosted adapters); the queue | Notes arrive in the queue with transcripts and flags; E2E 5 passes |
 | M3 | Switchboard auth, A01, A02, A03, A07, line state | Kenneth can review and decide; E2E 6 and 9 pass |
 | M4 | Rendering (redaction tone, Piper, translation), playback page 09, publishing job | Approved notes go live on schedule; E2E 4 and 7 pass |
 | M5 | A04, A05, A06, A09, A10: placements, carousel slides, newsletter image, reel, takedowns | One full week can be planned and its assets exported |
@@ -453,9 +459,23 @@ Rulings made after Version 1. Where an entry differs from an earlier section or 
 - **Approved copy:** the EN/FR toggle's screen-reader label is "Language" / "Langue". The desktop hint in French is "Ça marche mieux dans Chrome ou Safari. Ton micro ne sert que pendant que tu enregistres."
 - **CI:** GitHub Actions runs lint, type check, unit tests and browser tests on every pull request.
 
+**23 October 2026 (before M1)**
+
+- **The classifier is provider-agnostic:** one interface, two adapters chosen by config, plus `CLASSIFIER_MODE=keywords`, which needs no model. Adapter 1 is Mistral's EU API (`api.eu.mistral.ai` only, no fallback to the global endpoint). Adapter 2 is a self-hosted open-weights model on our own server. Built in M2, not before. Section 8 is updated.
+- **Mistral sees real notes only when all four are true:** (1) "Anonymous improvement data" is off; (2) Mistral has confirmed in writing that our API data isn't used for training and that its DPA applies; (3) zero data retention has been requested; (4) the EU endpoint is used. Invariant 10 now points to these four.
+- **Mistral account:** the API is business-only, so it's a pay-as-you-go business account. The "Experiment" and "Scale" plan rules are withdrawn, and `MISTRAL_PLAN` is replaced by `MISTRAL_CONDITIONS_CONFIRMED`.
+- **Until a provider is confirmed, `CLASSIFIER_MODE=keywords`.**
+
 ## 18. Launch checklist (not code; tracked here)
 
-- [ ] Classifier decided: Mistral with a DPA in place (free plan only with Mistral's written confirmation), or `CLASSIFIER_MODE=keywords` until then
+- [ ] Classifier decided (section 8): `keywords`, the self-hosted adapter, or the Mistral adapter. `CLASSIFIER_MODE=keywords` until one is confirmed
+- [ ] If Mistral: pay-as-you-go business account, with all four confirmed and kept on file:
+  - [ ] "Anonymous improvement data" turned off
+  - [ ] Mistral's written confirmation that our API data isn't used for training and that its DPA applies
+  - [ ] Zero data retention requested (keep the request and Mistral's reply)
+  - [ ] EU endpoint `api.eu.mistral.ai` only, no global fallback (checked in config and code)
+  - [ ] Then, and only then, `MISTRAL_CONDITIONS_CONFIRMED=yes`
+- [ ] If self-hosted: model and licence chosen, runs on our own server, reachable only from our network
 - [ ] DPIA approved by the board and signed, describing the classifier set-up actually running
 - [ ] Board's input on the crisis rule and the keyword lists (needed for the DPIA anyway)
 - [ ] EN and FR privacy notice and consent text; French legal text checked
