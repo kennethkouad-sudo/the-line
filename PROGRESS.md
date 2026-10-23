@@ -12,7 +12,7 @@ Next: M2 (the worker and the queue), once Kenneth has reviewed the M1 pull reque
 
 ## Done
 
-### M1: sender flow (staging still to come)
+### M1: sender flow, upload, deletion page, staging
 
 - **Screens 02–05** on phone and desktop, matching `Mode`/`DMode`, `Record`/`DRecord`, `Share`/`DShare` and `Ticket`/`DTicket`, plus the "Let it go" ending and the "microphone blocked" screen. They all happen on `/leave`, one after the other: the recording stays in the browser tab and is never put in a web address.
 - **The line's new shapes:** fork (02), live waveform (03), knot (04), ticket (05). Each stays at 500 px (phone) / 540 px (desktop) from the top, in English and French.
