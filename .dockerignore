@@ -1,0 +1,9 @@
+# Only web/ goes into the image; local and test files stay out.
+*
+!web/
+web/node_modules
+web/.next
+web/test-results
+web/playwright-report
+web/.storage
+web/.env*

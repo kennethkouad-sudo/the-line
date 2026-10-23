@@ -1,0 +1,16 @@
+/* Overlays the top edge, so the line keeps its height on every screen. */
+.bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  margin: 0;
+  padding: 3px 12px;
+  background: var(--alert-red);
+  color: var(--cream);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-align: center;
+  pointer-events: none;
+}

@@ -1,0 +1,68 @@
+/* Not designed: in the style of the cream screens (05). */
+.page {
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.top {
+  padding: 64px 24px 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 56px;
+  line-height: 0.88;
+}
+
+.body {
+  margin: 28px 4px 0;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.bottom {
+  padding: 40px 28px 32px;
+}
+
+.copy {
+  height: 48px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 24px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.helpline {
+  margin-top: 40px;
+}
+
+@media (min-width: 1024px) {
+  .top {
+    padding: 72px 64px 0 58px;
+  }
+
+  .title {
+    max-width: 1100px;
+    font-size: 120px;
+    line-height: 0.84;
+  }
+
+  .body {
+    max-width: 680px;
+    margin: 40px 0 0 6px;
+    font-size: 22px;
+  }
+
+  .bottom {
+    padding: 48px 64px;
+  }
+
+  .helpline {
+    max-width: 560px;
+  }
+}

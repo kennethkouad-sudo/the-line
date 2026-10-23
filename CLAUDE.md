@@ -25,16 +25,20 @@ The Line is a web voice recorder: anyone 18+ leaves a voice note of up to 60 sec
 7. **Expiry is real.** A note with no decision 30 days after submission is deleted, and so are its audio and transcripts.
 8. **Wording.** The UI never says "anonymous" and never promises that every note is shared. Approved phrasing: "shared without your name" and "A person reviews every note before it's shared." / « Une personne vérifie chaque note avant qu'elle soit partagée. »
 9. **Help is always visible.** Every sender and public page shows the helpline block (section 9.3).
-10. **Real notes reach Mistral only under a signed DPA with training turned off** (section 8). If that isn't in place, the classifier runs in `CLASSIFIER_MODE=keywords` and sends nothing out.
+10. **Real notes reach Mistral only when all four conditions in section 8 are met** (training off, written confirmation that the DPA applies, zero data retention requested, EU endpoint only). Until a provider is confirmed, the classifier runs in `CLASSIFIER_MODE=keywords` and sends nothing out.
 
 ## Where things are
 
 ```
 CLAUDE.md, PROGRESS.md, The_Line_Build_Spec.md, design/
-docker-compose.yml        web + Postgres (Postgres is unused until M1)
+Dockerfile                the app's image, built from web/ (at the top because Clever Cloud looks for it here)
+docker-compose.yml        web + Postgres (local use; staging and production run on Clever Cloud)
 web/                      the Next.js app (App Router, TypeScript)
-  app/                    routes: / (redirect), /leave, /privacy
-  components/             Line, HelplineBlock, LanguageToggle, Gate, SourceTagCapture
+  app/                    routes: / (redirect), /leave, /privacy, /d/[token], /api/notes, /api/health
+  components/             Line, HelplineBlock, Gate, Flow (01–05 on /leave), Mode, Record, Share, Ticket, Gone, Deletion…
+  lib/server/             server only: config, db, encryption, storage, upload checks, rate limit, Turnstile
+  db/migrations/          SQL, applied in order by scripts/migrate.mjs (also run when the app starts)
+  proxy.ts                staging only: password, noindex
   styles/tokens.css       colours, fonts, the line height (--line-y)
   styles/fonts.css        self-hosted fonts (files and OFL licences in public/fonts/)
   messages/en.json, fr.json
@@ -61,8 +65,13 @@ Needs Node.js 22 or newer. All commands run from `web/`.
 ```bash
 cd web
 npm install
+cp .env.example .env.local   # test settings for your own computer
+docker compose up db -d      # the database (from the repo root), or any local Postgres
+npm run db:migrate
 npm run dev            # development server: http://localhost:3000/leave
 ```
+
+All settings come from the environment; `web/.env.example` lists them. Real secrets are only ever typed into the host's settings page, never committed or pasted into chat.
 
 Production build: `npm run build && npm start`.
 
@@ -74,6 +83,8 @@ With Docker (from the repo root): `docker compose up --build`, then open http://
 cd web
 npm run test:unit      # Vitest, a second or two
 npm run test:e2e       # Playwright: builds the app, starts it on port 3100, tests phone and desktop
+                       # needs Postgres with a the_line_test database (or set E2E_DATABASE_URL)
+SCREENSHOTS=1 npx playwright test screenshots   # pull-request screenshots into docs/screenshots/m1
 npm test               # both
 npm run lint           # ESLint
 npm run typecheck      # TypeScript
@@ -86,6 +97,7 @@ GitHub Actions (`.github/workflows/ci.yml`) runs lint, type check, unit tests an
 
 ### In a Claude Code cloud session
 
+- Postgres 16 is installed but not running. Start it as the `postgres` user in a folder it can write to (e.g. `/var/tmp/pg`), then create the `the_line` user and the `the_line` and `the_line_test` databases (password `local-dev-only`).
 - Chromium is already installed, so don't run `playwright install`. Point Playwright at it:
   `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/opt/pw-browsers/chromium npm run test:e2e`
 - Docker isn't running at the start. Start it with `dockerd &`. Docker Hub may refuse with "429 Too Many Requests"; pull `mirror.gcr.io/library/<image>` and tag it with the plain name. `npm ci` inside a build can't reach the network without the session's proxy and CA; see `/root/.ccr/README.md`. The committed `Dockerfile` must stay free of these session-only settings.

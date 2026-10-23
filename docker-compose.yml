@@ -1,22 +1,38 @@
-# M0: the web app, plus the database it will use from M1.
-# The audio worker (Python) joins in M2, Caddy for TLS at the first deploy (M1).
+# Local use: the web app and its database. Staging and production run on Clever Cloud
+# (decisions log); this file is the portable fallback and for trying things locally.
+# The audio worker (Python) joins in M2.
 services:
   web:
-    build: ./web
+    build: .
     ports:
       - "3000:3000"
     environment:
       NODE_ENV: production
+      DATABASE_URL: postgres://the_line:local-dev-only@db:5432/the_line
+      STORAGE_DIR: /data/storage
+      # Local development only. Real secrets live in the host's environment (spec 14).
+      MASTER_KEY: ZGV2LW9ubHktbWFzdGVyLWtleS0zMi1ieXRlcy0hISE=
+      TOKEN_SALT: dev-only-token-salt
+      RATE_LIMIT_SECRET: dev-only-rate-limit-secret
+      # Cloudflare's public Turnstile test keys: they always pass.
+      TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+      TURNSTILE_SECRET: 1x0000000000000000000000000000000AA
+    volumes:
+      - storage:/data/storage
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:18-alpine
     environment:
       POSTGRES_DB: the_line
       POSTGRES_USER: the_line
-      # Local development only. Real secrets live in the server's environment (spec 14).
       POSTGRES_PASSWORD: local-dev-only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U the_line -d the_line"]
+      interval: 2s
+      retries: 15
     volumes:
       - db-data:/var/lib/postgresql
     ports:
@@ -24,3 +40,4 @@ services:
 
 volumes:
   db-data:
+  storage:
