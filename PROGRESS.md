@@ -79,10 +79,10 @@ Milestones are in `The_Line_Build_Spec.md` section 16. How to run things is in `
   - The secret settings, entered by Kenneth in Clever Cloud.
   - The app deploys from the pull request's branch. **Staging is reachable** (password, noindex and staging bar all working).
 - **First phone test** (iPhone X, Safari), with the real Cloudflare check passing:
-  - **Saving the note failed.** Most likely the storage connection (Cellar). The app's log line now gives the storage's own error code, to find out exactly why.
+  - **Saving the note failed:** Cellar said `411 MissingContentLength`. Inside the running app, uploads were sent as a stream without their size. Fixed: the request is signed first, then sent with its size. The browser tests now save through the same storage code as staging, to a strict local stand-in for Cellar that refuses uploads without a size (with the old code, they fail the same way staging did).
   - **Failed saves used up the 3-a-day allowance**, so Kenneth was told he'd left 3 notes. Fixed: a note that can't be saved no longer counts. Today's counts are cleared on the next deploy (migration 002).
   - **Listening back** was unreliable at first in Safari. The recording is now made in one piece rather than one-second chunks, and playback retries once.
-- **Still to do:** fix the storage connection from the log line, then repeat the phone test up to the deletion. Acceptance: staging is reachable (done), and a test note goes all the way through.
+- **Still to do:** repeat the phone test up to the deletion. Acceptance: staging is reachable (done), and a test note goes all the way through.
 
 ### Then M2: the worker (normalise, transcribe, classify) and the queue.
 

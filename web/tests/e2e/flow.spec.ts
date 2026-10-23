@@ -4,7 +4,7 @@ import path from "node:path";
 import { expect, test, type Page, type Request } from "@playwright/test";
 import pg from "pg";
 import { decrypt } from "@/lib/server/envelope";
-import { E2E_ENV } from "./env";
+import { E2E_ENV, STORED_FILES } from "./env";
 import { gotoReady, MESSAGES, openRecorder, openShare, recordFor, stubTurnstile, useOwnAddress, card } from "./helpers";
 
 const button = (page: Page, name: string) => page.getByRole("button", { name, exact: true });
@@ -93,7 +93,7 @@ for (const lang of ["en", "fr"] as const) {
       expect(JSON.stringify(note)).not.toMatch(/198\.51\.|127\.0\.0\.1|::1/);
 
       // Invariant 4: the stored file is encrypted; only the master key opens it.
-      const file = path.join(E2E_ENV.STORAGE_DIR, note.raw_audio_key);
+      const file = path.join(STORED_FILES, note.raw_audio_key);
       const sealed = readFileSync(file);
       expect(sealed.subarray(0, 3).toString()).toBe("TL1");
       expect(sealed.includes(Buffer.from([0x1a, 0x45, 0xdf, 0xa3]))).toBe(false);

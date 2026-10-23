@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { rm } from "node:fs/promises";
 import pg from "pg";
-import { E2E_ENV } from "./env";
+import { E2E_ENV, STORED_FILES } from "./env";
 
 /** A clean test database and an empty test storage folder for every run. */
 export default async function globalSetup() {
@@ -13,5 +13,5 @@ export default async function globalSetup() {
   await client.connect();
   await client.query("TRUNCATE notes, deletion_log, rate_limits");
   await client.end();
-  await rm(E2E_ENV.STORAGE_DIR, { recursive: true, force: true });
+  await rm(STORED_FILES, { recursive: true, force: true });
 }

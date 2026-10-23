@@ -1,5 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
-import { E2E_ENV, E2E_PORT, TURNSTILE_MOCK_PORT } from "./tests/e2e/env";
+import { E2E_ENV, E2E_PORT, S3_BUCKET, S3_MOCK_PORT, STORED_FILES, TURNSTILE_MOCK_PORT } from "./tests/e2e/env";
 
 const baseURL = `http://localhost:${E2E_PORT}`;
 
@@ -39,6 +39,11 @@ export default defineConfig({
     {
       command: `node tests/e2e/turnstile-mock.mjs ${TURNSTILE_MOCK_PORT}`,
       url: `http://localhost:${TURNSTILE_MOCK_PORT}/health`,
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      command: `node tests/e2e/s3-mock.mjs ${S3_MOCK_PORT} ${S3_BUCKET} ${STORED_FILES}`,
+      url: `http://localhost:${S3_MOCK_PORT}/health`,
       reuseExistingServer: !process.env.CI,
     },
     {

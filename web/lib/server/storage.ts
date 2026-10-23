@@ -62,11 +62,15 @@ export class S3Storage implements Storage {
   }
 
   private async send(method: string, key: string, body?: Buffer) {
-    const response = await this.client.fetch(this.url(key), {
+    const bytes = body ? new Uint8Array(body) : undefined;
+    // Sign first, then send the bytes themselves. Sending the signed Request object would
+    // turn the body into a stream without a Content-Length, which Cellar refuses (411).
+    const signed = await this.client.sign(this.url(key), {
       method,
-      body: body ? new Uint8Array(body) : undefined,
-      headers: body ? { "content-type": "application/octet-stream" } : undefined,
+      body: bytes,
+      headers: bytes ? { "content-type": "application/octet-stream" } : undefined,
     });
+    const response = await fetch(signed.url, { method, headers: signed.headers, body: bytes });
     if (!response.ok && !(method === "DELETE" && response.status === 404)) {
       // S3 explains failures with a short code (e.g. NoSuchBucket); log it, never the body or keys.
       const code = /<Code>([A-Za-z]{1,64})<\/Code>/.exec(await response.text().catch(() => ""))?.[1];
