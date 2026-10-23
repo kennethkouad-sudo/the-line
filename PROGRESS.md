@@ -4,9 +4,44 @@ Milestones are in `The_Line_Build_Spec.md` section 16. How to run things is in `
 
 ## Where we are
 
-**M0 is done** (18 October 2026): screen 01 runs locally in English and French, and the tests run and pass. Review changes are in (locked button look, exact desktop sizes, CI).
+**M1 is built and tested; the first deploy to staging is next** (23 October 2026). The sender flow 01–05, the upload, the deletion page and all their tests run in this session. Browser tests 1–3 from spec 15 pass. Staging on Clever Cloud waits for Kenneth's accounts (see "Next").
+
+**M0 is done** (18 October 2026).
 
 ## Done
+
+### M1: sender flow (staging still to come)
+
+- **Screens 02–05** on phone and desktop, matching `Mode`/`DMode`, `Record`/`DRecord`, `Share`/`DShare` and `Ticket`/`DTicket`, plus the "Let it go" ending and the "microphone blocked" screen. They all happen on `/leave`, one after the other: the recording stays in the browser tab and is never put in a web address.
+- **The line's new shapes:** fork (02), live waveform (03), knot (04), ticket (05). Each stays at 500 px (phone) / 540 px (desktop) from the top, in English and French.
+- **Recording (03):** the centre button starts (filled cream circle) and stops (the square). The microphone is asked for only when recording starts. The line is drawn from the voice's loudness as it goes, and stops by itself at 60 s. Start over discards the recording. Done is enabled once a recording of at least 5 s exists. The space bar starts and stops. If the microphone can't be reached (refused, or an Instagram/TikTok in-app browser), the "We can't reach your microphone" screen appears, with Copy the link.
+- **What now (04):** Listen back. **Let it go** throws the recording away and sends nothing (tested: zero requests carrying audio). **Share it** opens the three consents (none pre-ticked), the voice and timing choices, and loads the Cloudflare bot check, only at that moment. "Put it on the line" stays locked until everything is set.
+- **Private link (05):** the deletion link (24 random characters), Copy link, Save as a file (desktop), a summary of the choices, the helplines and "Leave another note".
+- **Deletion page `/d/<token>`:** shows "waiting" or "already deleted", and a Delete button with a confirmation. Deleting removes the recording, keeps an empty record (no content) and writes the deletion log. The page is never cached, indexed or passed on to other websites.
+- **Upload (`POST /api/notes`):** checks, in order:
+  - size under 3 MB;
+  - the Cloudflare bot check;
+  - all three consents, plus the consent wording's version;
+  - the voice and timing choices;
+  - the file really being WebM or MP4 audio (read from the file itself, not the browser's label);
+  - its length of 5–62 s, also read from the file itself;
+  - 3 notes a day per connection.
+
+  Only then is anything stored. The connection's address is never stored: only a scrambled value that changes daily and is deleted after 24 h.
+- **Encryption:** each recording is locked with its own key, which is itself locked with the master key (AES-256-GCM). Files are stored in Cellar on staging, or in a folder when run locally.
+- **Database:** Postgres, set up automatically when the app starts (`web/db/migrations/`). The `notes` table has every column from spec 5; the later ones stay empty until their milestone.
+- **Staging protection:** with `APP_ENV=staging`, every page asks for a password, sends `noindex`, and shows a thin "STAGING · test data only" bar. Without a password set, staging stays closed.
+- **Tests:** 45 unit tests and 143 browser tests (phone and desktop, EN and FR). They cover:
+  - the full flow, start to finish, in both languages, up to the encrypted file on disk and its deletion (E2E 1);
+  - Let it go sending nothing (E2E 2);
+  - the auto-stop at 60 s (E2E 3);
+  - every upload rule;
+  - the rate limit;
+  - Turnstile loading only after "Share it";
+  - the helplines, the "anonymous" ban and the accessibility checks on every screen;
+  - the staging password.
+- **CI** now has a Postgres database and also checks the formatting.
+- **The Docker image** was built and run here as Clever Cloud will run it (port 8080, staging mode, password, fresh database): it answered, asked for the password, showed the staging bar and created its tables.
 
 ### M0: foundations
 
@@ -36,17 +71,30 @@ Milestones are in `The_Line_Build_Spec.md` section 16. How to run things is in `
 
 ## Next
 
-### M1: sender flow and first deploy
+### M1: first deploy to staging (waiting on Kenneth's accounts)
 
-- Screens 02–05 (Mode, Record, What now, Private link), with the line's fork, waveform, knot and ticket variants.
-- Wire "Pick up the line" to screen 02 (marked `TODO(M1)` in `web/components/Gate/AgeGate.tsx`).
-- Upload API, Turnstile, rate limit, encrypted storage, deletion page.
-- First deploy to an EU staging server (Caddy for TLS).
-- Acceptance: E2E 1–3 pass; staging is reachable.
+1. Clever Cloud account and the staging app, with its Postgres and Cellar add-ons (EU).
+2. Cloudflare account and a Turnstile widget for the staging address.
+3. The secret settings, typed into Clever Cloud's panel by Kenneth.
+4. Deploy, then a test note on staging from a real phone. Acceptance: staging is reachable.
+
+Check on staging: Cellar accepts our storage requests (path-style addresses), and the real Turnstile widget appears and passes.
+
+### Then M2: the worker (normalise, transcribe, classify) and the queue.
 
 ### Open items to check (not blocking)
 
-- `TODO(legal)` / `TODO(legal-fr)`: the privacy notice.
+- `TODO(legal)` / `TODO(legal-fr)`: the privacy notice, which must also mention Cloudflare Turnstile (decisions log). The French consent texts are drafts (`TODO(legal-fr)`).
+- `TODO(copy)` / `TODO(copy-fr)`: drafts for Kenneth to check in the pull request:
+  - the deletion page;
+  - the other screen 05 combinations (narrator; "once it's reviewed");
+  - the error messages on 04;
+  - "too short" on 03;
+  - the "Copied" confirmations;
+  - the saved link file;
+  - all French for 02–05.
+
+  Search the message files for `TODO(copy` to list them.
 
 ## Launch checklist (additions)
 
@@ -90,6 +138,20 @@ The full list is in the spec, section 17 (decisions log). In short:
 - **Private link (05):** fits a 22+ character token, monospace, two lines on phone if needed.
 - **A07:** "3 notes a day per connection" (still IP-based).
 - **Alyssa** is the mental-health board lead (plain text on A03).
+
+**Smaller decisions made while building M1:**
+- **"WHAT NOW?" on phone** is scaled to fit one line. At the design's 84 px it is 379 px wide, which runs past a 390 px screen.
+- **French titles** (04, 05) are set smaller than the English ones, so they keep the same number of lines and the line stays at its height. They were measured with the real fonts.
+- **The review sentence on 04** is "A person reviews every note before it's shared." with a capital A (the approved wording). The design had it in lower case.
+- **The consent panel on 04** appears when "Share it" is chosen. Before that, it isn't shown (on desktop, the right half is empty), and Turnstile hasn't loaded.
+- **"or say anything" (03)** is a toggle: the question fades and the note is saved without a weekly question.
+- **Done (03)** also needs at least 5 seconds, so a too-short note can't fail at the very end. A short "too short" line explains why. `TODO(copy)`.
+- **The space bar note on desktop 03** reads "Space bar to start and stop", since it now also starts (`TODO(copy)`).
+- **The browser's Back button** moves back through 01–04. After 05 or "Let it go", it doesn't bring the recording back.
+- **The deletion token** is 24 characters (the spec asks for 22 or more).
+- **Security headers** on every page, including the microphone allowed only for our own site. On `/d/…`: no referrer, no caching, no indexing.
+- **The weekly question** has a row in a new `prompts` table, so notes can point to it. Its text still comes from the message files until M3.
+- **The staging bar** uses the alert red, so it can't be mistaken for part of the design.
 
 **Smaller decisions made while building M0:**
 - **Next.js "Cache Components" is off.** Every page depends on the visitor's language, so plain server rendering is simpler and matches the spec.

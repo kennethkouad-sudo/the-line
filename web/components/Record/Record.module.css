@@ -1,0 +1,378 @@
+/* Screen 03, from design/Record.dc.html (phone) and design/DRecord.dc.html (desktop). */
+.page {
+  min-height: 100vh;
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.page a {
+  color: var(--soft-cream);
+}
+
+.top {
+  padding: 32px 28px 0;
+}
+
+.modeLabel {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--soft-cream);
+}
+
+.prompt {
+  margin: 39px 0 0;
+  font-family: var(--font-hand);
+  font-size: 40px;
+  line-height: 1.02;
+  transform: rotate(-1.5deg);
+  transform-origin: left center;
+  transition: opacity 0.2s;
+}
+
+/* "or say anything": the question is set aside, not hidden. */
+.prompt[data-set-aside] {
+  opacity: 0.4;
+}
+
+.sayAnything {
+  min-height: var(--target-min);
+  margin: 40px 0 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--soft-cream);
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.sayAnything[aria-pressed="true"] {
+  color: var(--cream);
+  text-decoration-thickness: 2px;
+}
+
+/* --- The line as a live waveform: x = elapsed / 60 s × width (spec 9.2) --- */
+.wave {
+  position: absolute;
+  left: 0;
+  top: calc(50% - 60px);
+  width: 100%;
+  height: 120px;
+  overflow: visible;
+}
+
+.wave line,
+.wave path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.ahead {
+  stroke: var(--soft-cream);
+  stroke-opacity: 0.35;
+  stroke-width: 2;
+  stroke-dasharray: 2 6;
+}
+
+.trace {
+  stroke: var(--cream);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.halo,
+.tip {
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  background: var(--cream);
+  transform: translate(-50%, -50%);
+}
+
+.halo {
+  width: 32px;
+  height: 32px;
+  opacity: 0.12;
+}
+
+.tip {
+  width: 12px;
+  height: 12px;
+}
+
+.timer {
+  position: absolute;
+  top: calc(50% - 112px);
+  font-size: 34px;
+  line-height: 1.2;
+  transform: translateX(-50%);
+}
+
+.max {
+  position: absolute;
+  top: calc(50% + 16px);
+  right: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--soft-cream);
+}
+
+.tick {
+  display: none;
+}
+
+/* --- Below the line --- */
+.bottom {
+  padding: 79px 28px 24px;
+}
+
+.hint {
+  margin: 0 12px 0 0;
+  font-size: 17px;
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--soft-cream);
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 58px;
+}
+
+.startOver,
+.done {
+  min-width: 88px;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 24px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.startOver {
+  border: 1.5px solid var(--soft-cream);
+  background: transparent;
+  color: var(--cream);
+}
+
+.done {
+  border: none;
+  background: var(--cream);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.start,
+.stop {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border: 2px solid var(--cream);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Before recording: a filled cream circle (decisions log). */
+.start {
+  padding: 10px;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.stop {
+  background: transparent;
+}
+
+.square {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background: var(--cream);
+}
+
+.controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tooShort {
+  min-height: 1.4em;
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.staysHere {
+  margin: 4px 0 0;
+  font-size: 13px;
+  text-align: center;
+  color: var(--soft-cream);
+}
+
+.helpline {
+  margin-top: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prompt {
+    transition: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .top {
+    padding: 40px 64px 0;
+  }
+
+  .modeLabel {
+    font-size: 18px;
+    letter-spacing: 0.16em;
+  }
+
+  .prompt {
+    max-width: 980px;
+    margin-top: 48px;
+    font-size: 84px;
+    line-height: 0.98;
+  }
+
+  .sayAnything {
+    margin: 26px 0 0 4px;
+    font-size: 18px;
+  }
+
+  .wave {
+    top: calc(50% - 80px);
+    height: 160px;
+  }
+
+  .halo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .tip {
+    width: 16px;
+    height: 16px;
+  }
+
+  .timer {
+    top: calc(50% - 136px);
+    font-size: 64px;
+  }
+
+  .max,
+  .tick {
+    top: calc(50% + 70px);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--soft-cream);
+  }
+
+  .tick {
+    position: absolute;
+    display: block;
+    font-family: var(--font-display);
+    font-stretch: var(--display-stretch);
+    transform: translateX(-50%);
+  }
+
+  .tick::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -16px;
+    width: 1px;
+    height: 12px;
+    background: var(--soft-cream);
+    opacity: 0.5;
+  }
+
+  .bottom {
+    display: grid;
+    grid-template-columns: 620fr 136fr 620fr;
+    align-items: center;
+    padding: 135px 64px 32px;
+  }
+
+  .phoneOnly {
+    display: none;
+  }
+
+  .desktopOnly {
+    display: block;
+  }
+
+  .hint {
+    grid-column: 1;
+    margin: 0;
+    font-size: 22px;
+  }
+
+  .controls {
+    grid-column: 3;
+    justify-content: flex-end;
+    gap: 24px;
+    margin: 0;
+  }
+
+  .startOver,
+  .done {
+    height: 52px;
+    padding: 0 24px;
+    border-radius: 26px;
+    font-size: 17px;
+  }
+
+  .done {
+    padding: 0 30px;
+  }
+
+  .start,
+  .stop {
+    width: 104px;
+    height: 104px;
+  }
+
+  .start {
+    font-size: 15px;
+  }
+
+  .square {
+    width: 34px;
+    height: 34px;
+  }
+
+  .tooShort {
+    grid-column: 3;
+    text-align: right;
+  }
+
+  .staysHere {
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .helpline {
+    grid-column: 1 / -1;
+  }
+}

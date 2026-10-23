@@ -13,12 +13,14 @@ test.describe("screen 01, the gate", () => {
     await adult.check();
     await expect(pickUp).toBeEnabled();
 
-    // M0: it unlocks but goes nowhere yet (wired to screen 02 in M1).
-    await pickUp.click();
-    await expect(page).toHaveURL(/\/leave$/);
-
     await adult.uncheck();
     await expect(pickUp).toBeDisabled();
+
+    // M1: it leads to screen 02, on the same page.
+    await adult.check();
+    await pickUp.click();
+    await expect(page.getByRole("heading", { name: "WHO IS IT FOR?" })).toBeVisible();
+    await expect(page).toHaveURL(/\/leave$/);
   });
 
   test("locked and unlocked looks (decisions log)", async ({ page }) => {

@@ -48,8 +48,8 @@ Until v1.1, `line.histrnger.com/` redirects to `/leave`, keeping the query strin
 | Audio worker | Python service: ffmpeg, faster-whisper, Piper | Transcription and TTS self-hosted, so voices never leave the server |
 | Image rendering | satori + resvg (Node) | Newsletter image and carousel slides as PNG, from the same fonts |
 | Video rendering | ffmpeg in the audio worker | Reel MP4 |
-| File storage | S3-compatible object storage in the EU | Audio and rendered assets |
-| Hosting | One EU VPS (e.g. Hetzner, Germany or Finland), Docker Compose, Caddy for TLS | Cheap, EU-only, CPU is enough |
+| File storage | S3-compatible object storage in the EU (Clever Cloud Cellar) | Audio and rendered assets |
+| Hosting | **Clever Cloud** (EU region): the app, its Postgres add-on, and Cellar (S3-compatible storage). Fallback: one EU VPS (e.g. Hetzner), Docker Compose, Caddy for TLS. The code stays portable: Docker images, and all config from the environment | French and EU-only; HTTPS handled for us. The audio worker's (M2) hosting cost is decided in M2 |
 | Bot check | Cloudflare Turnstile | |
 | LLM | Provider-agnostic classifier (section 8): Mistral's EU API, or a self-hosted open-weights model, or keywords only | No lock-in; keywords mode needs no model |
 | Email | One transactional sender, alerts to Kenneth only (counts, never content) | |
@@ -466,6 +466,36 @@ Rulings made after Version 1. Where an entry differs from an earlier section or 
 - **Mistral account:** the API is business-only, so it's a pay-as-you-go business account. The "Experiment" and "Scale" plan rules are withdrawn, and `MISTRAL_PLAN` is replaced by `MISTRAL_CONDITIONS_CONFIRMED`.
 - **Until a provider is confirmed, `CLASSIFIER_MODE=keywords`.**
 
+**23 October 2026 (M1 go-ahead)**
+
+- **Hosting:** Clever Cloud for the app, Postgres and Cellar, in the EU region (section 3). A Hetzner VPS is the fallback, so the code stays portable: Docker images, and config only from the environment. The M2 worker's cost is decided in M2.
+- **Staging** runs on Clever Cloud's own default address (`*.cleverapps.io`), not on histrnger.com. It is protected by a password (HTTP basic auth, credentials from the environment), sends a `noindex` header, and shows a thin "STAGING · test data only" bar at the top. `line.histrnger.com` is connected only at launch, so M1 needs no DNS.
+- **Turnstile** loads only after the sender picks "Share it", never on "Let it go" or earlier. The no-outside-requests test allows Cloudflare on that step only. The privacy notice must mention it (`TODO(legal)`).
+- **Recording screen (03):** the large round button in the centre is the record/stop button.
+  - Before recording, it is a filled cream circle labelled "Start recording" / "Commencer". The microphone permission is requested when it is pressed.
+  - While recording, it shows the stop square. Pressing it, or reaching 60 s, stops the recording.
+  - Done (on to screen 04) is enabled only once a recording exists. Start over discards it. On desktop the space bar starts and stops.
+- **Approved copy:**
+
+| EN | FR |
+|---|---|
+| Start recording | Commencer |
+| It's gone. You said it out loud, and that counts. | C'est envolé. Tu l'as dit à voix haute, et ça compte. |
+| Leave another note | Laisser une autre note |
+| We can't reach your microphone. | On n'arrive pas à accéder à ton micro. |
+| If you opened this from Instagram or TikTok, open it in Safari or Chrome instead: tap the ••• menu, then 'Open in browser'. Otherwise, allow the microphone in your browser settings and try again. | Si tu as ouvert ce lien depuis Instagram ou TikTok, ouvre-le plutôt dans Safari ou Chrome : touche le menu •••, puis « Ouvrir dans le navigateur ». Sinon, autorise le micro dans les réglages de ton navigateur et réessaie. |
+| Copy the link | Copier le lien |
+| Please don't give medical advice: say how it felt, not what to take. | Ne donne pas de conseil médical : raconte ce que tu as ressenti, pas ce qu'il faut prendre. |
+| if you're hearing this… | si tu entends ça… |
+
+- **After "Let it go":** the line above, then "Leave another note", plus the helpline block.
+- **Microphone blocked** (also in in-app browsers): the title, body and "Copy the link" above.
+- **The deletion page and the other screen 05 combinations** are drafted by Claude Code, marked `TODO(copy)` / `TODO(copy-fr)`, and reviewed by Kenneth in the pull request.
+- **Helplines:** screens 02–05 show the full helpline block (invariant 9). On the dark recording screen it is small, at the bottom.
+- **Screen 02:** until v1.1, only the medical-advice line is shown under the cards (not the sentence about the library).
+- **Screen 03 prompt:** "Say what's on your mind" shows the weekly question. "Leave a note for a stranger" shows "if you're hearing this…". Weekly questions stay fixed in code until M3.
+- **Smaller rulings:** the busy notice on 04 waits for line state (M3). Notes stay `received` until the worker exists (M2). In M1 the deletion page can only show "waiting" or "already deleted". The server checks the recording's length by reading the file; ffmpeg checks it again in M2.
+
 ## 18. Launch checklist (not code; tracked here)
 
 - [ ] Classifier decided (section 8): `keywords`, the self-hosted adapter, or the Mistral adapter. `CLASSIFIER_MODE=keywords` until one is confirmed
@@ -485,3 +515,4 @@ Rulings made after Version 1. Where an entry differs from an earlier section or 
 - [ ] Real-device test in Instagram and TikTok in-app browsers
 - [ ] Bio link set to `line.histrnger.com/leave?from=intro` before the intro video
 - [ ] Backup reviewer invited
+- [ ] `line.histrnger.com` DNS connected to Clever Cloud; staging password removed from production only

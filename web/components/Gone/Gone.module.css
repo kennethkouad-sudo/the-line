@@ -1,0 +1,70 @@
+/* Not designed: in the style of the cream screens, the words in the handwritten voice. */
+.page {
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.top {
+  display: flex;
+  align-items: flex-end;
+  padding: 64px 28px 56px;
+}
+
+.gone {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--brown);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+.bottom {
+  padding: 32px 28px;
+}
+
+.again {
+  min-height: var(--target-min);
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--brown);
+  font-size: 17px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.again:hover {
+  color: var(--ink);
+}
+
+.helpline {
+  margin-top: 32px;
+}
+
+@media (min-width: 1024px) {
+  .top {
+    padding: 72px 64px 72px;
+  }
+
+  .gone {
+    max-width: 1000px;
+    font-size: 84px;
+    line-height: 0.98;
+  }
+
+  .bottom {
+    padding: 40px 64px;
+  }
+
+  .again {
+    font-size: 19px;
+  }
+
+  .helpline {
+    max-width: 560px;
+  }
+}

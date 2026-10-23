@@ -23,6 +23,21 @@ jobs:
     name: Lint, types, unit and browser tests
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    # The browser tests save test notes in a real Postgres, like staging.
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: the_line_test
+          POSTGRES_USER: the_line
+          POSTGRES_PASSWORD: local-dev-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U the_line -d the_line_test"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 20
     defaults:
       run:
         working-directory: web
@@ -40,6 +55,9 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Formatting
+        run: npm run format:check
 
       - name: Type check
         run: npm run typecheck

@@ -21,3 +21,26 @@
     line-height: 1.4;
   }
 }
+
+/* The dark recording screen: small, at the bottom (decisions log). */
+.block.small {
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--soft-cream);
+}
+
+.block.small a {
+  color: var(--soft-cream);
+}
+
+.block.small a:hover {
+  color: var(--cream);
+}
+
+@media (min-width: 1024px) {
+  .block.small {
+    gap: 6px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,18 @@
+// The settings the browser tests run the app with. Test values only; nothing real.
+export const E2E_PORT = 3100;
+export const TURNSTILE_MOCK_PORT = 3101;
+
+/** Cloudflare's published test site key, and the token our stand-in script hands out. */
+export const TEST_SITE_KEY = "1x00000000000000000000AA";
+export const TEST_BOT_TOKEN = "XXXX.DUMMY.TOKEN.XXXX";
+
+export const E2E_ENV = {
+  DATABASE_URL: process.env.E2E_DATABASE_URL ?? "postgres://the_line:local-dev-only@localhost:5432/the_line_test",
+  STORAGE_DIR: ".storage/e2e",
+  MASTER_KEY: Buffer.alloc(32, 7).toString("base64"),
+  TOKEN_SALT: "e2e-token-salt",
+  RATE_LIMIT_SECRET: "e2e-rate-limit-secret",
+  TURNSTILE_SITE_KEY: TEST_SITE_KEY,
+  TURNSTILE_SECRET: "1x0000000000000000000000000000000AA",
+  TURNSTILE_VERIFY_URL: `http://localhost:${TURNSTILE_MOCK_PORT}/siteverify`,
+};

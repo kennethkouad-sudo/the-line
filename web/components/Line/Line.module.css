@@ -51,3 +51,102 @@
     font-size: 22px;
   }
 }
+
+/* Fork (02), phone: the plain stroke gives way to the split drawn in design Mode. */
+.forkLeft,
+.forkRight {
+  position: absolute;
+  top: calc(50% - 230px);
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.forkLeft {
+  left: 0;
+}
+
+.forkLeft circle {
+  fill: var(--ink);
+  stroke: none;
+}
+
+.forkRight {
+  right: 0;
+  stroke-dasharray: 3 5;
+}
+
+.fork .stroke {
+  display: none;
+}
+
+/* Knot (04): 45% across on phone (176 of 390 px), 630 of 1440 px on desktop. */
+.knotRow {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+
+.knotBefore,
+.knotAfter {
+  height: var(--line-stroke);
+  background: var(--ink);
+}
+
+.knotBefore {
+  flex: 0 0 45.13%;
+}
+
+.knotAfter {
+  flex: 1 1 auto;
+}
+
+.knotPhone,
+.knotDesktop {
+  flex: none;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.knotDesktop {
+  display: none;
+}
+
+.knot .status {
+  top: -52px;
+  right: auto;
+  left: 61%;
+  font-size: 18px;
+}
+
+@media (min-width: 1024px) {
+  .fork .stroke {
+    display: block;
+  }
+
+  .forkLeft,
+  .forkRight {
+    display: none;
+  }
+
+  .knotBefore {
+    flex-basis: 43.75%;
+  }
+
+  .knotPhone {
+    display: none;
+  }
+
+  .knotDesktop {
+    display: block;
+  }
+
+  .knot .status {
+    top: 36px;
+    left: 41.67%;
+    font-size: 22px;
+  }
+}

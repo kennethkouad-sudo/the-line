@@ -1,0 +1,23 @@
+.status {
+  margin-left: 12px;
+  font-size: 15px;
+}
+
+.status:empty {
+  margin: 0;
+}
+
+.manual {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--target-min);
+  margin-top: 12px;
+  padding: 8px 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 14px;
+}

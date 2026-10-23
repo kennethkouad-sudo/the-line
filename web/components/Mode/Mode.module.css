@@ -1,0 +1,245 @@
+/* Screen 02, from design/Mode.dc.html (phone) and design/DMode.dc.html (desktop). */
+.page {
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.top {
+  position: relative;
+  padding: 72px 24px 0;
+}
+
+.nav {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: var(--target-min);
+  height: var(--target-min);
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.back svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The phone design shows only the arrow; the word stays for screen readers. */
+.backLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.wordmark {
+  display: none;
+}
+
+.title {
+  margin: 0;
+  font-size: 72px;
+  line-height: 0.86;
+}
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  height: 182px;
+  padding: 18px 20px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.confide {
+  position: absolute;
+  left: 70px;
+  right: 24px;
+  bottom: 17px;
+  background: var(--cream);
+}
+
+.encourage {
+  width: calc(100% - 94px);
+  margin: 19px 24px 0 70px;
+  background: var(--soft-cream);
+}
+
+.cardTitle {
+  font-size: 30px;
+  line-height: 0.95;
+}
+
+.cardBody {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.cardPrompt {
+  margin-top: auto;
+  font-family: var(--font-hand);
+  font-size: 19px;
+  line-height: 1.1;
+  color: var(--brown);
+}
+
+.bottom {
+  padding-bottom: 32px;
+}
+
+.note {
+  margin: 0;
+  padding: 0 28px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--brown);
+}
+
+.freeNote {
+  display: none;
+}
+
+.medicalNote {
+  margin-top: 44px;
+}
+
+.helpline {
+  margin: 28px 28px 0;
+}
+
+@media (min-width: 1024px) {
+  .top {
+    padding: 100px 0 0 60px;
+  }
+
+  .nav {
+    left: 48px;
+    right: 64px;
+    top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .back {
+    padding: 0 12px;
+    font-size: 16px;
+  }
+
+  .back svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .backLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+
+  .wordmark {
+    display: block;
+    margin-left: auto;
+    font-size: 18px;
+    letter-spacing: 0.16em;
+  }
+
+  .title {
+    font-size: min(200px, calc(200 / 1440 * 100vw));
+    line-height: 0.82;
+    white-space: nowrap;
+  }
+
+  /* The cards sit across the line: 400–680 px from the top, the line at 540. */
+  .card {
+    position: absolute;
+    z-index: 1;
+    width: 37.5%;
+    height: 280px;
+    margin: 0;
+    padding: 32px 36px;
+    gap: 12px;
+  }
+
+  .confide {
+    left: 13.89%;
+    right: auto;
+    bottom: -141px;
+  }
+
+  .encourage {
+    left: 56.94%;
+    top: -141px;
+  }
+
+  .cardTitle {
+    font-size: 52px;
+    line-height: 0.92;
+  }
+
+  .cardBody {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .cardPrompt {
+    font-size: 26px;
+  }
+
+  .bottom {
+    position: relative;
+    display: grid;
+    grid-template-columns: 200fr 540fr 80fr 540fr 80fr;
+    align-items: start;
+    padding-top: 171px;
+    padding-bottom: 48px;
+  }
+
+  .note {
+    padding: 0;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .freeNote {
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .medicalNote {
+    grid-column: 4;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .helpline {
+    grid-column: 2 / 5;
+    margin: 56px 0 0;
+  }
+}
