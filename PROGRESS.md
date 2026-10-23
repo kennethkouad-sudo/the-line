@@ -4,7 +4,9 @@ Milestones are in `The_Line_Build_Spec.md` section 16. How to run things is in `
 
 ## Where we are
 
-**M1 is built and tested; the first deploy to staging is next** (23 October 2026). The sender flow 01–05, the upload, the deletion page and all their tests run in this session. Browser tests 1–3 from spec 15 pass. Staging on Clever Cloud waits for Kenneth's accounts (see "Next").
+**M1 is done** (23 October 2026). The sender flow 01–05, the upload, the deletion page and their tests are built. Browser tests 1–3 from spec 15 pass, and staging on Clever Cloud is reachable. On 23 October Kenneth left a test note from an iPhone X (Safari) on staging, then opened its private link and deleted it: every step worked.
+
+Next: M2 (the worker and the queue), once Kenneth has reviewed the M1 pull request and its draft copy.
 
 **M0 is done** (18 October 2026).
 
@@ -71,7 +73,7 @@ Milestones are in `The_Line_Build_Spec.md` section 16. How to run things is in `
 
 ## Next
 
-### M1: first deploy to staging (in progress)
+### M1 staging: how it went (done)
 
 - **Done:**
   - Clever Cloud app `the-line-staging` with its Postgres and Cellar add-ons, all in Paris.
@@ -82,9 +84,11 @@ Milestones are in `The_Line_Build_Spec.md` section 16. How to run things is in `
   - **Saving the note failed:** Cellar said `411 MissingContentLength`. Inside the running app, uploads were sent as a stream without their size. Fixed: the request is signed first, then sent with its size. The browser tests now save through the same storage code as staging, to a strict local stand-in for Cellar that refuses uploads without a size (with the old code, they fail the same way staging did).
   - **Failed saves used up the 3-a-day allowance**, so Kenneth was told he'd left 3 notes. Fixed: a note that can't be saved no longer counts. Today's counts are cleared on the next deploy (migration 002).
   - **Listening back** was unreliable at first in Safari. The recording is now made in one piece rather than one-second chunks, and playback retries once.
-- **Still to do:** repeat the phone test up to the deletion. Acceptance: staging is reachable (done), and a test note goes all the way through.
+- **Second phone test, after the fixes:** listening back worked first time, the note was saved, the private link opened as "waiting", and deleting it worked.
 
-### Then M2: the worker (normalise, transcribe, classify) and the queue.
+### M2: the worker (normalise, transcribe, classify) and the queue
+
+The classifier is provider-agnostic, and keywords mode is on until a provider is confirmed (decisions log, 23 October). The worker's hosting cost on Clever Cloud is decided in M2.
 
 ### Open items to check (not blocking)
 
